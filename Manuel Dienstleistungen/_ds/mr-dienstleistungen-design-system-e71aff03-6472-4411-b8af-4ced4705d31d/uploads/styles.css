@@ -1,0 +1,149 @@
+/* ============================================================
+   MR-Dienstleistungen — Design-System
+   EINE Datei für ALLE Seiten. Hier änderst du etwas einmal,
+   und es ändert sich überall (alle Seiten, die diese Datei laden).
+   ============================================================ */
+
+:root {
+  /* --- Farben (deine Marke) --- */
+  --ink:        #1a1a17;   /* Schrift & "MR" — warmes Schwarz */
+  --mint:       #14b8a6;   /* Akzent: dein Mint-Türkis */
+  --mint-dark:  #0d8576;   /* dunkleres Mint für Text/Links auf Hell */
+  --mint-soft:  #e7f6f3;   /* zarter Mint-Hintergrund */
+  --paper:      #fbfaf7;   /* Seitenhintergrund, warm-weiß */
+  --surface:    #ffffff;   /* Karten / Kopfzeile */
+  --muted:      #5c5c54;   /* gedämpfte Schrift */
+  --line:       rgba(26, 26, 23, 0.10); /* feine Linien */
+
+  /* --- Schrift --- */
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+  --font-body:    "Hanken Grotesk", system-ui, sans-serif;
+
+  /* --- Maße --- */
+  --radius:    14px;
+  --radius-lg: 22px;
+  --maxw:      1080px;
+  --shadow:    0 1px 2px rgba(26,26,23,.04), 0 12px 30px rgba(26,26,23,.06);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.65;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Layout-Hilfen --- */
+.container { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+.section  { padding: 88px 0; }
+.eyebrow {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--mint-dark);
+}
+
+/* --- Überschriften --- */
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.08; letter-spacing: -.01em; }
+h1 { font-size: clamp(2.4rem, 6vw, 4rem); }
+h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); }
+h3 { font-size: 1.3rem; }
+.accent { color: var(--mint-dark); }
+
+p { color: var(--muted); }
+.lead { font-size: 1.2rem; color: var(--ink); opacity: .85; max-width: 40ch; }
+
+a { color: var(--mint-dark); text-decoration: none; }
+
+/* --- Knöpfe --- */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-body); font-weight: 600; font-size: 16px;
+  padding: 13px 24px; border-radius: 100px; border: 1.5px solid transparent;
+  cursor: pointer; transition: transform .15s ease, background .2s ease, color .2s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: var(--mint); color: #fff; }
+.btn-primary:hover { background: var(--mint-dark); }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn-ghost:hover { border-color: var(--ink); }
+
+/* --- Kopfzeile (auf jeder Seite gleich) --- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(251,250,247,.85); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.nav { display: flex; align-items: center; justify-content: space-between; height: 74px; }
+.logo { display: flex; align-items: center; gap: 12px; }
+.logo svg { height: 40px; width: auto; display: block; }
+.logo .wordmark {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 1.25rem; color: var(--ink); letter-spacing: -.01em;
+}
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a {
+  color: var(--ink); font-weight: 500; font-size: 16px; opacity: .8;
+  transition: opacity .2s ease;
+}
+.nav-links a:hover { opacity: 1; color: var(--mint-dark); }
+
+/* --- Hero --- */
+.hero { position: relative; padding: 96px 0 72px; overflow: hidden; }
+.hero h1 { max-width: 16ch; margin: 18px 0 22px; }
+.hero .lead { margin-bottom: 32px; }
+.hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+.spark { color: var(--mint); }
+
+/* --- Service-Kacheln --- */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); padding: 30px 28px;
+  box-shadow: var(--shadow); transition: transform .2s ease, border-color .2s ease;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.card:hover { transform: translateY(-4px); border-color: var(--mint); }
+.card .num { font-family: var(--font-display); font-weight: 700; color: var(--mint); font-size: 1rem; }
+.card h3 { color: var(--ink); }
+.card p { flex: 1; }
+.card .more { font-weight: 600; color: var(--mint-dark); }
+.card.feature { background: var(--mint-soft); border-color: transparent; }
+
+/* --- Über / Band --- */
+.band { background: var(--ink); color: #fff; border-radius: var(--radius-lg); padding: 48px; }
+.band h2 { color: #fff; }
+.band p { color: rgba(255,255,255,.78); max-width: 52ch; }
+
+/* --- Fußzeile --- */
+.site-footer { border-top: 1px solid var(--line); padding: 48px 0 36px; margin-top: 40px; }
+.footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 28px; }
+.footer-grid a { color: var(--ink); opacity: .8; }
+.footer-grid a:hover { color: var(--mint-dark); opacity: 1; }
+.footer-col h4 { font-family: var(--font-display); font-size: 1rem; margin-bottom: 10px; }
+.footer-col p, .footer-col a { font-size: 15px; display: block; line-height: 1.9; }
+.legal { margin-top: 28px; font-size: 13px; color: var(--muted); }
+
+/* --- Eintritts-Animation (dezent) --- */
+.reveal { opacity: 0; transform: translateY(16px); animation: rise .7s ease forwards; }
+.reveal:nth-child(2) { animation-delay: .08s; }
+.reveal:nth-child(3) { animation-delay: .16s; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .reveal { animation: none; opacity: 1; transform: none; } }
+
+/* --- Handy / kleine Bildschirme --- */
+@media (max-width: 820px) {
+  .grid-3 { grid-template-columns: 1fr; }
+  .nav-links { gap: 16px; font-size: 15px; }
+  .nav-links a:not(.btn) { display: none; }   /* auf dem Handy nur Logo + Kontakt-Knopf */
+  .section { padding: 60px 0; }
+  .band { padding: 32px 24px; }
+}

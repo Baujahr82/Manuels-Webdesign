@@ -1,0 +1,15 @@
+BILDER FÜR DIE BUTTON-GALERIE
+==============================
+
+Lege hier genau diese drei Dateien ab (Reihenfolge = Anzeige-Reihenfolge):
+
+    galerie-1.jpg
+    galerie-2.jpg
+    galerie-3.jpg
+
+- Format: JPG (oder PNG, dann Endung .png in buttons.html anpassen)
+- Empfohlen: quadratisch, mindestens 800 x 800 Pixel
+- Solange keine Datei da ist, zeigt die Seite einen Platzhalter mit dem Dateinamen.
+
+Sobald die Dateien exakt so heißen und in diesem Ordner (assets/buttons/) liegen,
+erscheinen sie automatisch auf der Buttons-Seite.
