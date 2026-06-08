@@ -65,25 +65,30 @@ Die beiden Formulare (`contact` und `anfrage`) erkennt Netlify nach dem ersten D
 
 Spam-Schutz: Honeypot-Feld `bot-field` ist in den Formularen bereits eingebaut.
 
-## Bilder hochladen — Ordnerstruktur & Namen
+## Bilder hochladen — ein Ordner, feste Namen
 
-Die Bilder sind nach Art in Unterordnern sortiert. Lege jede Datei **mit dem exakt vorgegebenen Namen** im passenden Ordner ab — dann erscheint sie automatisch. Solange eine Datei fehlt, zeigt die Seite einen Platzhalter mit dem erwarteten Dateinamen.
+Alle Bilder liegen in **einem einzigen Ordner**: `assets/bilder/`. Lege jede Datei **mit dem exakt vorgegebenen Namen** (klein geschrieben, Endung `.jpg`) dort ab — dann erscheint sie automatisch. Solange eine Datei fehlt, zeigt die Seite einen Platzhalter mit dem erwarteten Dateinamen.
 
 ```
-assets/manuel.jpg                    Porträt im "Wer dahintersteckt"-Bereich
+assets/bilder/manuelportrait.jpg   Porträt im "Wer dahintersteckt"-Bereich (Startseite)
 
-assets/buttons/galerie-1.jpg         Button-Galerie (Reihenfolge = Anzeige)
-assets/buttons/galerie-2.jpg
-assets/buttons/galerie-3.jpg
+assets/bilder/thuledachbox.jpg     Thule Dachbox XT XL            (Vermietung)
+assets/bilder/buttonmaschine.jpg   Badgematic Buttonmaschine      (Vermietung)
+assets/bilder/stanzmaschine.jpg    Papierstanze                   (Vermietung)
 
-assets/webdesign/keibelhexen.jpg     Projekt-Vorschau Keibelhexen
-assets/webdesign/jogi-weiss.jpg      Projekt-Vorschau Jogi Weiß
+assets/bilder/pavillon1.jpg        Faltpavillon, Hauptbild        (Vermietung)
+assets/bilder/pavillon2.jpg        Faltpavillon, Galerie
+assets/bilder/pavillon3.jpg        Faltpavillon, Galerie
 
-assets/vermietung/dachbox.jpg        Thule Dachbox XT XL
-assets/vermietung/buttonmaschine.jpg Badgematic Buttonmaschine
+assets/bilder/button1.jpg          Beispiel-Button 1  (Vermietung + Buttons-Seite)
+assets/bilder/button2.jpg          Beispiel-Button 2
+assets/bilder/button3.jpg          Beispiel-Button 3
+
+assets/bilder/keibelhexen.jpg      Projekt-Vorschau Keibelhexen   (Webdesign)
+assets/bilder/jogi-weiss.jpg       Projekt-Vorschau Jogi Weiß     (Webdesign)
 ```
 
-In jedem Ordner liegt eine Datei `_BILDER-HIERHIN.txt` mit denselben Hinweisen.
+Im Ordner liegt eine Datei `_BILDER-HIERHIN.txt` mit denselben Hinweisen und einer GitHub-Upload-Anleitung.
 
 ### Bilder über Netlify hochladen — Schritt für Schritt
 
@@ -92,8 +97,7 @@ Da du alles direkt in Netlify pflegst (ohne GitHub):
 1. Bei [app.netlify.com](https://app.netlify.com) einloggen und deine Site öffnen.
 2. Oben auf den Tab **Deploys** klicken.
 3. Auf dem Rechner den **kompletten Projektordner** öffnen und die Bilder
-   mit den exakten Namen in die richtigen Unterordner legen
-   (`assets/buttons/`, `assets/webdesign/`, `assets/vermietung/`, `assets/`).
+   mit den exakten Namen in den Ordner `assets/bilder/` legen.
 4. Den **gesamten Projektordner** wieder per Drag & Drop in das Feld
    **„Drag and drop your site output folder here"** ziehen.
 5. Netlify macht ein neues Deploy — die Bilder sind sofort live.
@@ -107,7 +111,7 @@ Alle Texte stehen direkt in den HTML-Dateien — einfach mit einem Texteditor ö
 und ändern, dann neu hochladen (oder pushen, wenn über GitHub).
 
 **Häufige Stellen:**
-- **Foto Manuel** — in `index.html` den `<div class="portrait" id="portrait-manuel">` durch ein `<img src="assets/manuel.jpg" alt="Manuel Rudorfer" />` ersetzen.
+- **Foto Manuel** — Datei `assets/bilder/manuelportrait.jpg` ablegen (der Slot in `index.html` ist schon eingebaut).
 - **Button-Galerie** — in `buttons.html` die `.gallery-grid` mit echten Fotos füllen.
 - **Portfolio** — neue Projekte in `webdesign.html` als `<li>` in der `.portfolio-compact` Liste ergänzen.
 - **Preise** — Buttonmaschine in `vermietung.html`, Buttons in `buttons.html`.

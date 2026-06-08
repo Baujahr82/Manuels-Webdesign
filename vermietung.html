@@ -10,6 +10,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Vermietung: schmalere, ruhigere Spalte — wirkt eleganter, weniger wuchtig */
+    body { --maxw: 920px; }
+    /* Header & Footer dürfen ruhig bis zur normalen Breite gehen … */
+    .site-header .container,
+    .site-footer .container { max-width: 1080px; }
+    /* … der Inhalt selbst bleibt schmal. */
+    .sub-hero .container,
+    .section .container { max-width: var(--maxw); }
+  </style>
 </head>
 <body>
 
@@ -72,12 +82,6 @@
           <span class="more">Preise &amp; Details →</span>
         </a>
 
-        <div class="card reveal">
-          <span class="num">04</span>
-          <h3>Sonderwunsch?</h3>
-          <p>Du brauchst etwas Bestimmtes für einen einmaligen Zweck? Wenn ich's habe oder besorgen kann, sag Bescheid — Anfragen kostet nichts.</p>
-        </div>
-
       </div>
     </div>
   </section>
@@ -93,8 +97,8 @@
 
       <div class="split" style="margin-bottom:24px; align-items:stretch;">
         <div class="about-portrait" style="max-width:none; aspect-ratio:4/3;">
-          <img class="photo-fill" src="assets/vermietung/dachbox.jpg" alt="Thule Dachbox XT XL Titan glossy" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-          <span class="ph-note" style="display:none;">Foto der Dachbox<br><span class="ph-file">assets/vermietung/dachbox.jpg</span></span>
+          <img class="photo-fill" src="assets/bilder/thuledachbox.jpg" alt="Thule Dachbox XT XL Titan glossy" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <span class="ph-note" style="display:none;">Foto der Dachbox<br><span class="ph-file">assets/bilder/thuledachbox.jpg</span></span>
         </div>
         <div style="display:flex; flex-direction:column; gap:16px; justify-content:center;">
           <div class="card" style="margin:0;">
@@ -219,8 +223,8 @@
           </ul>
         </div>
         <div class="about-portrait" style="max-width:none; aspect-ratio:4/3;">
-          <img class="photo-fill" src="assets/vermietung/buttonmaschine.jpg" alt="Badgematic Buttonmaschine" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-          <span class="ph-note" style="display:none;">Foto der Buttonmaschine<br><span class="ph-file">assets/vermietung/buttonmaschine.jpg</span></span>
+          <img class="photo-fill" src="assets/bilder/buttonmaschine.jpg" alt="Badgematic Buttonmaschine" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <span class="ph-note" style="display:none;">Foto der Buttonmaschine<br><span class="ph-file">assets/bilder/buttonmaschine.jpg</span></span>
         </div>
       </div>
 
@@ -261,6 +265,38 @@
       <div class="info-block" style="margin-top:18px;">
         <h4>Staffelrabatt auf das Verbrauchsmaterial</h4>
         <p>Ein Button-Rohling (59&nbsp;mm) kostet <strong>0,25&nbsp;€</strong>. Ab&nbsp;300 Stück bekommst du <strong>10&nbsp;% Rabatt</strong>, ab&nbsp;600 Stück <strong>20&nbsp;%</strong> und ab&nbsp;900 Stück <strong>24&nbsp;%</strong> auf die gesamte Menge. Sag mir vorab, wie viele du ungefähr machen willst, dann packe ich entsprechend ein.</p>
+      </div>
+
+      <!-- Papierstanze -->
+      <div class="split" style="margin-top:24px; align-items:stretch;">
+        <div class="info-block" style="margin:0; justify-content:center;">
+          <h4>Papierstanze (optional)</h4>
+          <p>Mit der Papierstanze schneidest du dein Motiv passgenau auf 59&nbsp;mm zu — gleichmäßig und ohne Geknibbel. Für die ganze Mietdauer +10&nbsp;€.</p>
+        </div>
+        <div class="about-portrait" style="max-width:none; aspect-ratio:4/3;">
+          <img class="photo-fill" src="assets/bilder/stanzmaschine.jpg" alt="Papierstanze für 59-mm-Buttons" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <span class="ph-note" style="display:none;">Foto der Papierstanze<br><span class="ph-file">assets/bilder/stanzmaschine.jpg</span></span>
+        </div>
+      </div>
+
+      <!-- Beispiel-Buttons -->
+      <div class="section-head" style="margin:40px 0 16px; max-width:56ch;">
+        <p class="eyebrow">Beispiele</p>
+        <h3 style="font-size:1.4rem; margin:8px 0 0;">So sehen fertige Buttons aus.</h3>
+      </div>
+      <div class="gallery-grid three">
+        <div class="tile">
+          <img class="photo-fill" src="assets/bilder/button1.jpg" alt="Beispiel-Button 1" loading="lazy" onerror="this.remove();" />
+          <span>Beispiel-Button 1<br><span class="ph-file">assets/bilder/button1.jpg</span></span>
+        </div>
+        <div class="tile">
+          <img class="photo-fill" src="assets/bilder/button2.jpg" alt="Beispiel-Button 2" loading="lazy" onerror="this.remove();" />
+          <span>Beispiel-Button 2<br><span class="ph-file">assets/bilder/button2.jpg</span></span>
+        </div>
+        <div class="tile">
+          <img class="photo-fill" src="assets/bilder/button3.jpg" alt="Beispiel-Button 3" loading="lazy" onerror="this.remove();" />
+          <span>Beispiel-Button 3<br><span class="ph-file">assets/bilder/button3.jpg</span></span>
+        </div>
       </div>
 
       <!-- ====== BUTTONMASCHINEN-RECHNER ====== -->
@@ -359,8 +395,8 @@
           </ul>
         </div>
         <div class="about-portrait" style="max-width:none; aspect-ratio:4/3;">
-          <img class="photo-fill" src="assets/vermietung/pavillon.jpg" alt="Duratent Faltpavillon Hexa40 4×4 m, schwarz" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-          <span class="ph-note" style="display:none;">Foto des Faltpavillons<br><span class="ph-file">assets/vermietung/pavillon.jpg</span></span>
+          <img class="photo-fill" src="assets/bilder/pavillon1.jpg" alt="Duratent Faltpavillon Hexa40 4×4 m, schwarz" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <span class="ph-note" style="display:none;">Foto des Faltpavillons<br><span class="ph-file">assets/bilder/pavillon1.jpg</span></span>
         </div>
       </div>
 
@@ -408,22 +444,14 @@
         <p class="eyebrow">Fotos</p>
         <h3 style="font-size:1.4rem; margin:8px 0 0;">So sieht der Pavillon aus.</h3>
       </div>
-      <div class="gallery-grid">
+      <div class="gallery-grid" style="grid-template-columns:repeat(2,1fr);">
         <div class="tile">
-          <img class="photo-fill" src="assets/vermietung/pavillon-1.jpg" alt="Faltpavillon aufgebaut" loading="lazy" onerror="this.remove();" />
-          <span>Aufgebaut, ganze Ansicht<br><span class="ph-file">assets/vermietung/pavillon-1.jpg</span></span>
+          <img class="photo-fill" src="assets/bilder/pavillon2.jpg" alt="Faltpavillon, weitere Ansicht" loading="lazy" onerror="this.remove();" />
+          <span>Weitere Ansicht<br><span class="ph-file">assets/bilder/pavillon2.jpg</span></span>
         </div>
         <div class="tile">
-          <img class="photo-fill" src="assets/vermietung/pavillon-2.jpg" alt="Faltpavillon mit Seitenwänden" loading="lazy" onerror="this.remove();" />
-          <span>Mit Seitenwänden<br><span class="ph-file">assets/vermietung/pavillon-2.jpg</span></span>
-        </div>
-        <div class="tile">
-          <img class="photo-fill" src="assets/vermietung/pavillon-3.jpg" alt="Gestänge und Profil" loading="lazy" onerror="this.remove();" />
-          <span>Gestänge &amp; Profil<br><span class="ph-file">assets/vermietung/pavillon-3.jpg</span></span>
-        </div>
-        <div class="tile">
-          <img class="photo-fill" src="assets/vermietung/pavillon-4.jpg" alt="Transporttasche mit Rollen" loading="lazy" onerror="this.remove();" />
-          <span>Transporttasche mit Rollen<br><span class="ph-file">assets/vermietung/pavillon-4.jpg</span></span>
+          <img class="photo-fill" src="assets/bilder/pavillon3.jpg" alt="Faltpavillon, Detail" loading="lazy" onerror="this.remove();" />
+          <span>Detail / Aufbau<br><span class="ph-file">assets/bilder/pavillon3.jpg</span></span>
         </div>
       </div>
 
