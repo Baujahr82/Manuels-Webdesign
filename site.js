@@ -12,6 +12,41 @@
     el.classList.add('is-visible');
   });
 
+  // ----- Bilder: Endung egal -------------------------------
+  //  <img data-img="assets/bilder/button1"> probiert automatisch
+  //  .jpg / .jpeg / .png / .webp (auch GROSS geschrieben) und nimmt
+  //  das erste, das wirklich existiert. data-img darf auch mehrere
+  //  Namen (durch Komma getrennt) enthalten — dann werden alle probiert.
+  //  Wird gar nichts gefunden: Platzhalter (.ph-note) zeigen bzw. Bild
+  //  entfernen, damit der Hinweistext sichtbar bleibt.
+  function mrResolveImage(spec, onFound, onFail) {
+    var bases = String(spec).split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+    var exts = ['jpg', 'jpeg', 'png', 'webp', 'JPG', 'JPEG', 'PNG', 'WEBP'];
+    var cands = [];
+    bases.forEach(function (b) { exts.forEach(function (e) { cands.push(b + '.' + e); }); });
+    var i = 0;
+    (function next() {
+      if (i >= cands.length) { if (onFail) onFail(); return; }
+      var url = cands[i++];
+      var probe = new Image();
+      probe.onload = function () { onFound(url); };
+      probe.onerror = next;
+      probe.src = url;
+    })();
+  }
+
+  document.querySelectorAll('img[data-img]').forEach(function (img) {
+    mrResolveImage(
+      img.getAttribute('data-img'),
+      function (url) { img.src = url; img.classList.add('is-loaded'); },
+      function () {
+        var note = img.parentNode.querySelector('.ph-note');
+        if (note) { img.style.display = 'none'; note.style.display = 'flex'; }
+        else { img.remove(); }
+      }
+    );
+  });
+
   // ----- AJAX-Form-Submit (verhindert mailto / Weiterleitung)
   //       Sendet an Netlify Forms via fetch und zeigt Inline-Danke.
   document.querySelectorAll('form[data-netlify]').forEach(function (form) {

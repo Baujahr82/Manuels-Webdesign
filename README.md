@@ -67,25 +67,29 @@ Spam-Schutz: Honeypot-Feld `bot-field` ist in den Formularen bereits eingebaut.
 
 ## Bilder hochladen — ein Ordner, feste Namen
 
-Alle Bilder liegen in **einem einzigen Ordner**: `assets/bilder/`. Lege jede Datei **mit dem exakt vorgegebenen Namen** (klein geschrieben, Endung `.jpg`) dort ab — dann erscheint sie automatisch. Solange eine Datei fehlt, zeigt die Seite einen Platzhalter mit dem erwarteten Dateinamen.
+Alle Bilder liegen in **einem einzigen Ordner**: `assets/bilder/`. Lege jede Datei **mit dem exakt vorgegebenen Namen** (klein geschrieben) dort ab — dann erscheint sie automatisch. **Die Endung ist egal:** `.jpg`, `.jpeg`, `.png` und `.webp` werden alle automatisch gefunden (auch GROSS geschrieben). Solange eine Datei fehlt, zeigt die Seite einen Platzhalter mit dem erwarteten Namen.
 
 ```
-assets/bilder/manuelportrait.jpg   Porträt im "Wer dahintersteckt"-Bereich (Startseite)
+portrait          Porträt im "Wer dahintersteckt"-Bereich (Startseite)
 
-assets/bilder/thuledachbox.jpg     Thule Dachbox XT XL            (Vermietung)
-assets/bilder/buttonmaschine.jpg   Badgematic Buttonmaschine      (Vermietung)
-assets/bilder/stanzmaschine.jpg    Papierstanze                   (Vermietung)
+thuledachbox1     Thule Dachbox — Galerie 1                (Vermietung)
+thuledachbox2     Thule Dachbox — Galerie 2
+thuledachbox3     Thule Dachbox — Galerie 3
+thuledachbox4     Thule Dachbox — Galerie 4
+buttonmaschine    Badgematic Buttonmaschine               (Vermietung)
+stanzmaschine     Papierstanze                            (Vermietung)
 
-assets/bilder/pavillon1.jpg        Faltpavillon, Hauptbild        (Vermietung)
-assets/bilder/pavillon2.jpg        Faltpavillon, Galerie
-assets/bilder/pavillon3.jpg        Faltpavillon, Galerie
+pavillon1         Faltpavillon, Hauptbild                 (Vermietung)
+pavillon2         Faltpavillon, Galerie
+pavillon3         Faltpavillon, Galerie
 
-assets/bilder/button1.jpg          Beispiel-Button 1  (Vermietung + Buttons-Seite)
-assets/bilder/button2.jpg          Beispiel-Button 2
-assets/bilder/button3.jpg          Beispiel-Button 3
+button1           Beispiel-Button 1   (Vermietung + Buttons-Seite)
+button2           Beispiel-Button 2
+button3           Beispiel-Button 3
+button4           Beispiel-Button 4
 
-assets/bilder/keibelhexen.jpg      Projekt-Vorschau Keibelhexen   (Webdesign)
-assets/bilder/jogi-weiss.jpg       Projekt-Vorschau Jogi Weiß     (Webdesign)
+keibelhexen       Projekt-Vorschau Keibelhexen            (Webdesign)
+jogi-weiss        Projekt-Vorschau Jogi Weiß              (Webdesign)
 ```
 
 Im Ordner liegt eine Datei `_BILDER-HIERHIN.txt` mit denselben Hinweisen und einer GitHub-Upload-Anleitung.
@@ -111,7 +115,7 @@ Alle Texte stehen direkt in den HTML-Dateien — einfach mit einem Texteditor ö
 und ändern, dann neu hochladen (oder pushen, wenn über GitHub).
 
 **Häufige Stellen:**
-- **Foto Manuel** — Datei `assets/bilder/manuelportrait.jpg` ablegen (der Slot in `index.html` ist schon eingebaut).
+- **Foto Manuel** — Datei `portrait` (Endung egal) in `assets/bilder/` ablegen (der Slot in `index.html` ist schon eingebaut).
 - **Button-Galerie** — in `buttons.html` die `.gallery-grid` mit echten Fotos füllen.
 - **Portfolio** — neue Projekte in `webdesign.html` als `<li>` in der `.portfolio-compact` Liste ergänzen.
 - **Preise** — Buttonmaschine in `vermietung.html`, Buttons in `buttons.html`.
