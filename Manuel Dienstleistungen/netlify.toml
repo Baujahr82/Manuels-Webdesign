@@ -1,0 +1,28 @@
+# Netlify-Konfiguration für MR-Dienstleistungen
+#
+# Diese Seite ist eine statische Multi-Page-Site (kein Build-Prozess).
+# Netlify veröffentlicht einfach alle Dateien aus dem Projektordner.
+
+[build]
+  publish = "."
+
+# Keine Redirects nötig — alle Seiten sind echte HTML-Dateien
+# (index.html, buttons.html, webdesign.html, vermietung.html,
+# anfrage.html, impressum.html, datenschutz.html, agb.html).
+
+# Cache-Header für Assets (Logos, Fonts) — schnellere Folge-Aufrufe
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Forms-Erkennung läuft automatisch über data-netlify="true" im HTML.
+#
+# WICHTIG nach dem ersten Deploy:
+# E-Mail-Benachrichtigungen an manuel-dienstleistungen@gmx.de einrichten:
+#   Site settings → Forms → "contact" → Form notifications →
+#     Add notification → Email notification →
+#     Email to notify: manuel-dienstleistungen@gmx.de
+#
+# Das gleiche nochmal für das Formular "anfrage":
+#   Site settings → Forms → "anfrage" → Form notifications → ...

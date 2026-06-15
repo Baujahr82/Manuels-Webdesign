@@ -1,0 +1,784 @@
+/* ============================================================
+   MR-Dienstleistungen — Design-System
+   EINE Datei für ALLE Seiten. Hier änderst du etwas einmal,
+   und es ändert sich überall (alle Seiten, die diese Datei laden).
+   ============================================================ */
+
+:root {
+  /* --- Farben (deine Marke) --- */
+  --ink:        #1a1a17;   /* Schrift & "MR" — warmes Schwarz */
+  --mint:       #14b8a6;   /* Akzent: dein Mint-Türkis */
+  --mint-dark:  #0d8576;   /* dunkleres Mint für Text/Links auf Hell */
+  --mint-soft:  #e7f6f3;   /* zarter Mint-Hintergrund */
+  --paper:      #fbfaf7;   /* Seitenhintergrund, warm-weiß */
+  --surface:    #ffffff;   /* Karten / Kopfzeile */
+  --muted:      #5c5c54;   /* gedämpfte Schrift */
+  --line:       rgba(26, 26, 23, 0.10); /* feine Linien */
+
+  /* --- Schrift --- */
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+  --font-body:    "Hanken Grotesk", system-ui, sans-serif;
+
+  /* --- Maße --- */
+  --radius:    14px;
+  --radius-lg: 22px;
+  --maxw:      1080px;
+  --shadow:    0 1px 2px rgba(26,26,23,.04), 0 12px 30px rgba(26,26,23,.06);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.65;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Layout-Hilfen --- */
+.container { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+.section  { padding: 88px 0; }
+.eyebrow {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--mint-dark);
+}
+
+/* --- Überschriften --- */
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.08; letter-spacing: -.01em; }
+h1 { font-size: clamp(2.4rem, 6vw, 4rem); }
+h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); }
+h3 { font-size: 1.3rem; }
+.accent { color: var(--mint-dark); }
+
+p { color: var(--muted); }
+.lead { font-size: 1.2rem; color: var(--ink); opacity: .85; max-width: 40ch; }
+
+a { color: var(--mint-dark); text-decoration: none; }
+
+/* --- Knöpfe --- */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-body); font-weight: 600; font-size: 16px;
+  padding: 13px 24px; border-radius: 100px; border: 1.5px solid transparent;
+  cursor: pointer; transition: transform .15s ease, background .2s ease, color .2s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: var(--mint); color: #fff; }
+.btn-primary:hover { background: var(--mint-dark); }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn-ghost:hover { border-color: var(--ink); }
+
+/* --- Kopfzeile (auf jeder Seite gleich) --- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(251,250,247,.85); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.nav { display: flex; align-items: center; justify-content: space-between; height: 74px; }
+.logo { display: flex; align-items: center; gap: 12px; }
+.logo svg { height: 40px; width: auto; display: block; }
+.logo .wordmark {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 1.25rem; color: var(--ink); letter-spacing: -.01em;
+}
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a {
+  color: var(--ink); font-weight: 500; font-size: 16px; opacity: .8;
+  transition: opacity .2s ease;
+}
+.nav-links a:hover { opacity: 1; color: var(--mint-dark); }
+
+/* --- Hero --- */
+.hero { position: relative; padding: 96px 0 72px; overflow: hidden; }
+.hero h1 { max-width: 16ch; margin: 18px 0 22px; }
+.hero .lead { margin-bottom: 32px; }
+.hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+.spark { color: var(--mint); }
+
+/* --- Service-Kacheln --- */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); padding: 30px 28px;
+  box-shadow: var(--shadow); transition: transform .2s ease, border-color .2s ease;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.card:hover { transform: translateY(-4px); border-color: var(--mint); }
+.card .num { font-family: var(--font-display); font-weight: 700; color: var(--mint); font-size: 1rem; }
+.card h3 { color: var(--ink); }
+.card p { flex: 1; }
+.card .more { font-weight: 600; color: var(--mint-dark); }
+.card.feature { background: var(--mint-soft); border-color: transparent; }
+
+/* --- Über / Band --- */
+.band { background: var(--ink); color: #fff; border-radius: var(--radius-lg); padding: 48px; }
+.band h2 { color: #fff; }
+.band p { color: rgba(255,255,255,.78); max-width: 52ch; }
+
+/* --- Fußzeile --- */
+.site-footer { border-top: 1px solid var(--line); padding: 48px 0 36px; margin-top: 40px; }
+.footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 28px; }
+.footer-grid a { color: var(--ink); opacity: .8; }
+.footer-grid a:hover { color: var(--mint-dark); opacity: 1; }
+.footer-col h4 { font-family: var(--font-display); font-size: 1rem; margin-bottom: 10px; }
+.footer-col p, .footer-col a { font-size: 15px; display: block; line-height: 1.9; }
+.legal { margin-top: 28px; font-size: 13px; color: var(--muted); }
+
+/* --- About-Band mit Foto-Platzhalter ---------------------- */
+.band.with-photo {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 32px;
+  align-items: center;
+}
+@media (max-width: 640px) { .band.with-photo { grid-template-columns: 1fr; text-align: left; } }
+.band .portrait {
+  width: 100%; aspect-ratio: 1; max-width: 200px;
+  border-radius: 100px;
+  background: rgba(255,255,255,.06);
+  border: 2px solid rgba(255,255,255,.12);
+  display: grid; place-items: center; position: relative; overflow: hidden;
+}
+.band .portrait::before {
+  content: ""; position: absolute; inset: 12px; border-radius: 100px;
+  border: 1px dashed rgba(255,255,255,.2);
+}
+.band .portrait span {
+  position: relative; z-index: 1;
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(255,255,255,.5); text-align: center; padding: 0 12px;
+}
+
+/* --- Hosting-Optionen-Liste (Webdesign-Seite) ------------ */
+.hosting-list {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+  list-style: none; padding: 0; margin: 0;
+}
+@media (max-width: 820px) { .hosting-list { grid-template-columns: 1fr; } }
+.hosting-list li {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 18px 20px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.hosting-list .h-name {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 16px; color: var(--ink);
+}
+.hosting-list .h-price {
+  font-size: 13px; color: var(--mint-dark); font-weight: 600;
+  letter-spacing: .02em;
+}
+.hosting-list .h-meta {
+  font-size: 13px; color: var(--muted); line-height: 1.5; margin: 4px 0 0;
+}
+
+/* --- Eintritts-Animation (dezent) --- */
+.reveal { opacity: 0; transform: translateY(16px); animation: rise .7s ease forwards; }
+.reveal:nth-child(2) { animation-delay: .08s; }
+.reveal:nth-child(3) { animation-delay: .16s; }
+.reveal.is-visible { opacity: 1; transform: none; animation: none; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .reveal { animation: none; opacity: 1; transform: none; } }
+
+/* --- Aktiver Nav-Link (zeigt aktuelle Seite) --- */
+.nav-links a.is-active { color: var(--mint-dark); opacity: 1; position: relative; }
+.nav-links a.is-active:not(.btn)::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -22px;
+  height: 2px; background: var(--mint);
+}
+
+/* --- Section-Header (Eyebrow + H2 + Lead) ----------------- */
+.section-head { margin-bottom: 48px; max-width: 56ch; }
+.section-head h2 { margin: 10px 0 14px; }
+.section-head .lead { margin: 0; }
+
+/* --- Sub-Hero (für Unterseiten — kompakter als Startseite) */
+.sub-hero { padding: 80px 0 32px; }
+.sub-hero h1 { max-width: 18ch; margin: 16px 0 18px; }
+.sub-hero .lead { margin-bottom: 28px; }
+
+/* --- Zweispalter ------------------------------------------ */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+.split.tight { gap: 22px; }
+@media (max-width: 820px) { .split { grid-template-columns: 1fr; gap: 22px; } }
+
+/* --- Schritt-Liste (Ablauf 01–04) ------------------------- */
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; counter-reset: step; list-style: none; }
+.steps li {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); padding: 24px 22px;
+  display: flex; flex-direction: column; gap: 8px;
+  box-shadow: var(--shadow);
+}
+.steps li::before {
+  counter-increment: step;
+  content: counter(step, decimal-leading-zero);
+  font-family: var(--font-display); font-weight: 700;
+  color: var(--mint); font-size: 14px;
+}
+.steps li h4 { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; line-height: 1.2; color: var(--ink); margin: 0; }
+.steps li p { font-size: 15px; line-height: 1.55; margin: 0; }
+@media (max-width: 820px) { .steps { grid-template-columns: 1fr; } }
+
+/* --- Spec-Tabelle (z.B. Größen für Buttons) --------------- */
+.spec-table {
+  width: 100%; border-collapse: collapse;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.spec-table th, .spec-table td {
+  padding: 16px 20px; text-align: left; vertical-align: top;
+  border-bottom: 1px solid var(--line); font-size: 16px;
+}
+.spec-table tr:last-child th, .spec-table tr:last-child td { border-bottom: 0; }
+.spec-table th { font-family: var(--font-display); font-weight: 700; color: var(--ink); white-space: nowrap; width: 120px; }
+.spec-table td { color: var(--muted); }
+.spec-table .price { color: var(--ink); font-weight: 600; }
+.spec-table .badge {
+  display: inline-block; font-size: 12px; font-weight: 600;
+  color: var(--mint-dark); background: var(--mint-soft);
+  padding: 3px 10px; border-radius: 100px; margin-left: 8px;
+  letter-spacing: .04em;
+}
+
+/* --- Tags / Chips (Anlässe etc.) -------------------------- */
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag {
+  display: inline-block; font-size: 14px; font-weight: 500;
+  color: var(--ink); background: var(--surface);
+  border: 1px solid var(--line); padding: 8px 14px; border-radius: 100px;
+}
+
+/* --- Galerie-Platzhalter ---------------------------------- */
+.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.gallery-grid .tile {
+  aspect-ratio: 1 / 1;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  display: grid; place-items: center;
+  color: var(--muted); font-size: 13px; letter-spacing: .04em;
+  text-align: center; padding: 14px;
+  position: relative; overflow: hidden;
+}
+.gallery-grid .tile::before {
+  content: ""; position: absolute; inset: 14px;
+  border: 1px dashed var(--line); border-radius: calc(var(--radius) - 4px);
+}
+.gallery-grid .tile span { position: relative; z-index: 1; }
+@media (max-width: 820px) { .gallery-grid { grid-template-columns: 1fr 1fr; } }
+
+/* --- Portfolio-Karten (Webdesign-Seite) ------------------- */
+.portfolio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+@media (max-width: 820px) { .portfolio-grid { grid-template-columns: 1fr; } }
+.project {
+  display: flex; flex-direction: column;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); overflow: hidden;
+  box-shadow: var(--shadow); text-decoration: none; color: inherit;
+  transition: transform .2s ease, border-color .2s ease;
+}
+.project:hover { transform: translateY(-4px); border-color: var(--mint); }
+.project .thumb {
+  aspect-ratio: 16 / 10; background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  display: grid; place-items: center; position: relative;
+}
+.project .thumb::before {
+  content: ""; position: absolute; inset: 16px;
+  border: 1px dashed var(--line); border-radius: 8px;
+}
+.project .thumb span {
+  position: relative; z-index: 1;
+  font-size: 13px; color: var(--muted); letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.project .body { padding: 26px 28px 28px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.project .num { font-family: var(--font-display); font-weight: 700; color: var(--mint); font-size: 14px; }
+.project h3 { color: var(--ink); margin: 0; }
+.project .meta { font-size: 13px; color: var(--muted); letter-spacing: .04em; margin: 0; }
+.project p { margin: 6px 0 0; }
+.project .more { margin-top: auto; padding-top: 14px; font-weight: 600; color: var(--mint-dark); }
+
+/* --- Kontakt-Sektion mit Form ----------------------------- */
+.contact { padding-top: 24px; }
+.contact-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 56px; align-items: start; }
+@media (max-width: 820px) { .contact-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+.contact-direct { list-style: none; margin: 24px 0 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.contact-direct li { display: flex; flex-direction: column; gap: 2px; }
+.contact-direct .lbl {
+  font-size: 12px; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--muted);
+}
+.contact-direct a { color: var(--mint-dark); font-weight: 500; font-size: 17px; }
+.contact-direct a:hover { color: var(--ink); }
+
+.form-card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); padding: 32px;
+  box-shadow: var(--shadow);
+  display: flex; flex-direction: column; gap: 16px;
+  position: relative;
+}
+@media (max-width: 640px) { .form-card { padding: 24px; } }
+.form-card .hp { position: absolute; left: -9999px; }
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label {
+  font-size: 12px; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ink);
+}
+.field .req { color: var(--mint-dark); }
+.field input,
+.field textarea {
+  font-family: var(--font-body); font-size: 16px; color: var(--ink);
+  background: var(--paper); border: 1.5px solid var(--line);
+  border-radius: 8px; padding: 12px 14px; width: 100%;
+  transition: border-color .2s ease, background .2s ease;
+}
+.field textarea { resize: vertical; min-height: 120px; line-height: 1.55; }
+.field input:focus, .field textarea:focus {
+  outline: none; border-color: var(--mint); background: var(--surface);
+}
+
+.form-card .btn { align-self: flex-start; margin-top: 6px; }
+.form-fineprint { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.55; }
+
+/* --- Erfolgs-Hinweis (nach erfolgreichem Versand) --------- */
+.form-success {
+  background: var(--mint-soft); border-radius: var(--radius-lg);
+  padding: 32px; display: flex; flex-direction: column; gap: 10px;
+  border: 1px solid transparent;
+}
+.form-success[hidden] { display: none; }
+.form-success .ok {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 100px;
+  background: var(--mint); color: #fff; font-weight: 700; font-size: 22px;
+  margin-bottom: 4px;
+}
+.form-success h3 { color: var(--ink); margin: 0; }
+.form-success p { color: var(--ink); opacity: .8; margin: 0; }
+
+.form-error[hidden] { display: none; }
+.form-error {
+  background: #fef2f2; border: 1px solid #fecaca;
+  color: #991b1b; border-radius: 8px; padding: 12px 14px; font-size: 14px;
+}
+
+/* --- About-Block auf Unterseiten -------------------------- */
+.about-block { display: grid; grid-template-columns: 1fr 1.4fr; gap: 32px; align-items: center; }
+@media (max-width: 820px) { .about-block { grid-template-columns: 1fr; gap: 22px; } }
+.about-portrait {
+  aspect-ratio: 4 / 5;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg);
+  display: grid; place-items: center; color: var(--muted); font-size: 13px; letter-spacing: .08em;
+  text-transform: uppercase;
+  box-shadow: var(--shadow);
+  max-width: 360px;
+}
+.about-portrait::before {
+  content: ""; position: absolute; inset: 16px;
+  border: 1px dashed var(--line); border-radius: calc(var(--radius-lg) - 6px);
+}
+.about-portrait { position: relative; overflow: hidden; }
+.about-portrait span { position: relative; z-index: 1; }
+
+/* --- Foto-Slots mit Platzhalter ---------------------------- */
+/* <img> liegt über dem Platzhalter. Fehlt die Datei, blendet sich
+   das Bild per onerror aus und der Dateiname-Hinweis bleibt sichtbar. */
+.photo-fill {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; z-index: 3; display: block;
+}
+.band .portrait .photo-fill { border-radius: 100px; }
+.ph-note {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  text-align: center; padding: 10px;
+  font-size: 12px; color: var(--muted); letter-spacing: .02em; line-height: 1.4;
+}
+.ph-note .ph-file {
+  font-family: var(--font-mono, monospace); font-size: 11px;
+  color: var(--mint-dark); word-break: break-all;
+}
+.band .portrait .ph-note { color: rgba(255,255,255,.55); }
+.band .portrait .ph-note .ph-file { color: var(--mint); }
+
+/* --- Inline-Links innerhalb von Text ---------------------- */
+.inline-link {
+  color: var(--mint-dark); font-weight: 500;
+  border-bottom: 1px solid currentColor;
+  transition: color .2s ease;
+}
+.inline-link:hover { color: var(--ink); }
+
+/* --- Akkordeon (Anfrage-Seite) ---------------------------- */
+.accordion { display: flex; flex-direction: column; gap: 12px; }
+.accordion details {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); overflow: hidden;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.accordion details[open] {
+  border-color: var(--mint);
+  box-shadow: var(--shadow);
+}
+.accordion summary {
+  list-style: none; cursor: pointer; padding: 18px 22px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  user-select: none;
+}
+.accordion summary::-webkit-details-marker { display: none; }
+.accordion summary .sum-l { display: flex; align-items: baseline; gap: 14px; flex: 1; }
+.accordion summary .sum-n {
+  font-family: var(--font-display); font-weight: 700; font-size: 14px;
+  color: var(--mint); letter-spacing: .04em; min-width: 28px;
+}
+.accordion summary .sum-h {
+  font-family: var(--font-display); font-weight: 700; font-size: 18px;
+  color: var(--ink); line-height: 1.2;
+}
+.accordion summary .chev {
+  width: 12px; height: 12px;
+  border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
+  transform: rotate(45deg); transition: transform .2s ease; flex-shrink: 0;
+  margin-right: 6px;
+}
+.accordion details[open] summary .chev { transform: rotate(-135deg); margin-top: 6px; }
+.accordion .acc-body {
+  padding: 6px 22px 24px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.accordion .acc-body p.help {
+  font-size: 13px; color: var(--muted); line-height: 1.55; margin: 0;
+}
+
+/* --- Checkbox/Radio-Liste in Anfrage-Seite ---------------- */
+.check-list { display: flex; flex-direction: column; gap: 8px; }
+.check-list label {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 15px; color: var(--ink); cursor: pointer;
+  padding: 8px 10px; border-radius: 6px;
+  transition: background .15s ease;
+}
+.check-list label:hover { background: var(--paper); }
+.check-list input { margin-top: 3px; accent-color: var(--mint); }
+
+/* --- Anfrage-Header ------------------------------------- */
+.anfrage-meta {
+  display: flex; flex-wrap: wrap; gap: 32px;
+  border-top: 1px solid var(--line); padding-top: 20px; margin-top: 28px;
+}
+.anfrage-meta li { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+.anfrage-meta .m-n {
+  font-family: var(--font-display); font-weight: 700; font-size: 24px;
+  color: var(--mint-dark); line-height: 1;
+}
+.anfrage-meta .m-t {
+  font-size: 12px; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--muted);
+}
+
+/* --- Anfrage-Teaser auf webdesign.html ------------------ */
+.brief-teaser {
+  background: var(--mint-soft); border-radius: var(--radius-lg);
+  padding: 32px 36px; display: flex; gap: 28px; align-items: center;
+  justify-content: space-between; flex-wrap: wrap;
+}
+.brief-teaser .t-text { flex: 1; min-width: 280px; }
+.brief-teaser h3 { color: var(--ink); margin: 0 0 6px; }
+.brief-teaser p { color: var(--ink); opacity: .75; margin: 0; max-width: 50ch; }
+
+/* --- Stats-Row (Counter auf Webdesign-Seite) -------------- */
+.stats-row {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
+  list-style: none; padding: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 28px 0;
+}
+.stats-row li { display: flex; flex-direction: column; gap: 6px; }
+.stats-row .stat-n {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(2rem, 4vw, 2.8rem); line-height: 1;
+  color: var(--mint-dark); letter-spacing: -.01em;
+}
+.stats-row .stat-t {
+  font-size: 13px; font-weight: 500; color: var(--muted);
+  letter-spacing: .02em;
+}
+@media (max-width: 640px) { .stats-row { grid-template-columns: 1fr; gap: 16px; padding: 22px 0; } }
+
+/* --- Kompakte Portfolio-Karten ----------------------------- */
+.portfolio-compact {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+  list-style: none; padding: 0;
+}
+@media (max-width: 640px) { .portfolio-compact { grid-template-columns: 1fr; } }
+.portfolio-compact a {
+  display: grid; grid-template-columns: 84px 1fr;
+  gap: 18px; align-items: center;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 14px;
+  text-decoration: none; color: inherit;
+  transition: transform .2s ease, border-color .2s ease;
+}
+.portfolio-compact a:hover { transform: translateY(-2px); border-color: var(--mint); }
+.portfolio-compact .pc-thumb {
+  width: 84px; height: 84px; border-radius: 8px;
+  background: var(--paper); border: 1px solid var(--line);
+  overflow: hidden;
+  display: grid; place-items: center; flex-shrink: 0; position: relative;
+  font-family: var(--font-display); font-weight: 700;
+  color: var(--mint); font-size: 18px;
+}
+.portfolio-compact .pc-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.portfolio-compact h3 {
+  font-family: var(--font-display); font-weight: 700; font-size: 17px;
+  color: var(--ink); line-height: 1.2; margin: 0;
+}
+.portfolio-compact .pc-meta {
+  font-size: 12px; color: var(--muted); margin: 0;
+  letter-spacing: .04em;
+}
+.portfolio-compact .pc-link {
+  font-size: 13px; color: var(--mint-dark); font-weight: 500;
+  margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* --- Info-Block (Hinweis-Karte) ---------------------------- */
+.info-block {
+  background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--mint);
+  border-radius: var(--radius); padding: 22px 24px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.info-block h4 {
+  font-family: var(--font-display); font-weight: 700; font-size: 16px;
+  color: var(--ink); margin: 0;
+}
+.info-block p { margin: 0; font-size: 15px; line-height: 1.55; }
+
+/* --- Galerie auf 3 reduziert: passe Spalten an ------------ */
+.gallery-grid.three { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 820px) { .gallery-grid.three { grid-template-columns: 1fr; } }
+
+/* --- Galerie mit 4 Bildern (klein & fein, rein zur Info) --- */
+.gallery-grid.four { grid-template-columns: repeat(4, 1fr); gap: 12px; }
+@media (max-width: 820px) { .gallery-grid.four { grid-template-columns: 1fr 1fr; } }
+/* Querformat-Kacheln (Dachbox, Pavillon) statt quadratisch */
+.gallery-grid.landscape .tile { aspect-ratio: 4 / 3; }
+/* Galerie-Kacheln sind rein informativ — kein Zoom, kein Pointer */
+.gallery-grid .tile { cursor: default; }
+.gallery-grid .tile .photo-fill { transition: transform .2s ease; }
+
+/* Sicherheits-Cap: Foto-Boxen dürfen nie breiter als ihre Spalte
+   werden (verhindert Überlappen bei aspect-ratio + Stretch). */
+.about-portrait { max-width: 100%; min-width: 0; }
+
+/* --- Legale Seiten (Impressum, Datenschutz, AGB) ---------- */
+.legal-page { padding: 56px 0 96px; }
+.legal-page .container { max-width: 760px; }
+.legal-page h1 {
+  font-size: clamp(2rem, 4vw, 2.8rem); margin: 0 0 8px;
+}
+.legal-page .legal-meta {
+  font-size: 13px; color: var(--muted); letter-spacing: .04em;
+  margin: 0 0 36px;
+}
+.legal-page h2 {
+  font-size: 1.4rem; margin: 36px 0 12px; color: var(--ink);
+  padding-top: 18px; border-top: 1px solid var(--line);
+}
+.legal-page h2:first-of-type { border-top: 0; padding-top: 0; margin-top: 24px; }
+.legal-page h3 {
+  font-size: 1.05rem; margin: 22px 0 6px; color: var(--ink);
+}
+.legal-page p, .legal-page li {
+  font-size: 16px; line-height: 1.65; color: var(--ink); opacity: .85;
+}
+.legal-page p { margin: 0 0 12px; }
+.legal-page ul, .legal-page ol { padding-left: 22px; margin: 0 0 16px; }
+.legal-page li { margin-bottom: 6px; }
+.legal-page a { color: var(--mint-dark); border-bottom: 1px solid currentColor; }
+.legal-page a:hover { color: var(--ink); }
+.legal-page strong { color: var(--ink); opacity: 1; }
+.legal-page .legal-nav {
+  display: flex; gap: 18px; flex-wrap: wrap;
+  margin-bottom: 24px; padding-bottom: 22px; border-bottom: 1px solid var(--line);
+}
+.legal-page .legal-nav a {
+  font-size: 13px; font-weight: 600; letter-spacing: .06em;
+  color: var(--muted); border-bottom: 0;
+}
+.legal-page .legal-nav a:hover { color: var(--mint-dark); }
+.legal-page .legal-nav a.is-active { color: var(--mint-dark); }
+
+/* --- Aktiver Service-Sub-Header für Unterseiten ----------- */
+.sub-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-body); font-weight: 600; font-size: 14px;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--mint-dark);
+}
+.sub-tag::before {
+  content: "✦"; color: var(--mint); font-size: 16px;
+}
+
+/* ============================================================
+   PREIS-RECHNER (Vermietung) — interaktive Kalkulatoren
+   ============================================================ */
+.calc {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+@media (max-width: 760px) { .calc { grid-template-columns: 1fr; } }
+
+.calc-controls {
+  padding: 32px 34px;
+  display: flex; flex-direction: column; gap: 26px;
+}
+@media (max-width: 640px) { .calc-controls { padding: 26px 22px; gap: 22px; } }
+
+.calc-row { display: flex; flex-direction: column; gap: 12px; }
+.calc-row .calc-label {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 1rem; color: var(--ink); line-height: 1.2;
+}
+.calc-row .calc-label .calc-sub {
+  display: block; font-family: var(--font-body); font-weight: 500;
+  font-size: 13px; color: var(--muted); margin-top: 3px; letter-spacing: 0;
+}
+
+/* Stepper (+ / −) */
+.stepper {
+  display: inline-flex; align-items: center;
+  border: 1.5px solid var(--line); border-radius: 100px;
+  overflow: hidden; width: fit-content; background: var(--surface);
+}
+.stepper button {
+  width: 46px; height: 46px; border: 0; background: var(--surface);
+  font-size: 22px; line-height: 1; color: var(--ink); cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+.stepper button:hover { background: var(--mint-soft); color: var(--mint-dark); }
+.stepper button:disabled { opacity: .35; cursor: not-allowed; background: var(--surface); color: var(--ink); }
+.stepper input {
+  width: 70px; height: 46px; border: 0; text-align: center;
+  font-family: var(--font-display); font-weight: 700; font-size: 1.2rem;
+  color: var(--ink); background: var(--paper);
+  border-left: 1.5px solid var(--line); border-right: 1.5px solid var(--line);
+  -moz-appearance: textfield;
+}
+.stepper input::-webkit-outer-spin-button,
+.stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.stepper input:focus { outline: none; background: var(--surface); }
+
+/* Segmentierter Schalter (Ja/Nein) */
+.segmented {
+  display: inline-flex; gap: 4px; padding: 4px;
+  border: 1.5px solid var(--line); border-radius: 100px;
+  width: fit-content; background: var(--surface);
+}
+.segmented button {
+  border: 0; background: transparent; cursor: pointer;
+  padding: 9px 22px; border-radius: 100px;
+  font-family: var(--font-body); font-weight: 600; font-size: 15px;
+  color: var(--muted); transition: background .15s ease, color .15s ease;
+}
+.segmented button.is-on { background: var(--mint); color: #fff; }
+
+/* Mengen-Schnellwahl + Slider */
+.calc-quick { display: flex; flex-wrap: wrap; gap: 8px; }
+.calc-quick button {
+  border: 1.5px solid var(--line); background: var(--surface);
+  border-radius: 100px; padding: 7px 15px; cursor: pointer;
+  font-family: var(--font-body); font-weight: 600; font-size: 14px; color: var(--ink);
+  transition: border-color .15s ease, color .15s ease, background .15s ease;
+}
+.calc-quick button:hover { border-color: var(--mint); color: var(--mint-dark); }
+.calc-quick button.is-on { background: var(--mint-soft); border-color: var(--mint); color: var(--mint-dark); }
+
+.calc-slider { width: 100%; accent-color: var(--mint); height: 6px; cursor: pointer; }
+.calc-menge-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+
+/* Zusammenfassung / Summenkarte */
+.calc-summary {
+  background: var(--mint-soft); padding: 32px 34px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+@media (max-width: 640px) { .calc-summary { padding: 26px 22px; } }
+.calc-summary .sum-title {
+  font-size: 12px; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--mint-dark); margin-bottom: 14px;
+}
+.sum-line {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+  padding: 11px 0; border-bottom: 1px solid rgba(13,133,118,.14);
+  font-size: 15px; color: var(--muted);
+}
+.sum-line .s-lab { display: flex; flex-direction: column; gap: 1px; }
+.sum-line .s-lab small { font-size: 12px; color: var(--mint-dark); }
+.sum-line .s-val { font-weight: 600; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.sum-line.is-muted { color: var(--muted); }
+.sum-line.is-off { opacity: .45; }
+.sum-line.is-off .s-val { font-weight: 500; }
+
+.calc-total {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 16px; margin-top: 18px;
+}
+.calc-total .t-lab { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--ink); }
+.calc-total .t-val {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(2rem, 5vw, 2.6rem); line-height: 1;
+  color: var(--mint-dark); letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+}
+.calc-kaution {
+  margin-top: 14px; font-size: 13px; line-height: 1.5; color: var(--muted);
+}
+.calc-kaution strong { color: var(--ink); }
+.calc-note { margin-top: 10px; font-size: 13px; line-height: 1.5; color: var(--mint-dark); font-weight: 500; }
+.calc-note[hidden] { display: none; }
+
+/* Verfügbarkeits-Kalender (Google Calendar Embed) */
+.calendar-wrap {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow);
+  overflow: hidden; padding: 10px;
+}
+.calendar-frame {
+  width: 100%; height: 600px; border: 0; display: block;
+  border-radius: calc(var(--radius-lg) - 12px);
+}
+@media (max-width: 640px) { .calendar-frame { height: 460px; } }
+.cal-legend {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--muted); margin-top: 12px;
+}
+.cal-legend .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--mint); display: inline-block; }
+
+/* --- Handy / kleine Bildschirme --------------------------- */
+@media (max-width: 820px) {
+  .grid-3 { grid-template-columns: 1fr; }
+  .nav-links { gap: 16px; font-size: 15px; }
+  .nav-links a:not(.btn) { display: none; }
+  .section { padding: 60px 0; }
+  .band { padding: 32px 24px; }
+  .sub-hero { padding: 48px 0 24px; }
+}
