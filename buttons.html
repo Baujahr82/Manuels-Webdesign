@@ -141,6 +141,63 @@
         <h4>Warum ab 20&nbsp;Stück?</h4>
         <p>Jeder Button läuft durch dieselben Schritte: Motiv prüfen, drucken, ausschneiden, pressen. Ab zwanzig Stück läuft das effizient und der Preis bleibt fair. Du brauchst weniger? Schreib mir trotzdem — dann sprechen wir konkret über den Preis, das lässt sich meistens regeln.</p>
       </div>
+
+      <!-- ====== BUTTONS-RECHNER ====== -->
+      <h3 style="margin:40px 0 16px; font-size:1.3rem;">Preis berechnen</h3>
+      <div class="calc" id="calc-bestellung">
+        <div class="calc-controls">
+          <div class="calc-row">
+            <span class="calc-label">Dein Tarif
+              <span class="calc-sub">Mitglied einer Fasnets- oder Karnevalszunft? Dann 10&nbsp;Cent günstiger je Button.</span>
+            </span>
+            <div class="segmented" data-seg="tarif" role="group" aria-label="Tarif">
+              <button type="button" data-val="0" class="is-on">Standard · 0,60&nbsp;€</button>
+              <button type="button" data-val="1">Faschingsgemeinde · 0,50&nbsp;€</button>
+            </div>
+          </div>
+
+          <div class="calc-row">
+            <span class="calc-label">25&nbsp;mm Buttons
+              <span class="calc-sub">Der Kleine. In 10er-Schritten.</span>
+            </span>
+            <div class="stepper" data-step="q25">
+              <button type="button" aria-label="weniger 25-mm-Buttons">−</button>
+              <input type="number" value="0" min="0" max="2000" step="10" inputmode="numeric" aria-label="Anzahl 25-mm-Buttons" />
+              <button type="button" aria-label="mehr 25-mm-Buttons">+</button>
+            </div>
+          </div>
+
+          <div class="calc-row">
+            <span class="calc-label">59&nbsp;mm Buttons
+              <span class="calc-sub">Der Große. In 10er-Schritten.</span>
+            </span>
+            <div class="stepper" data-step="q59">
+              <button type="button" aria-label="weniger 59-mm-Buttons">−</button>
+              <input type="number" value="20" min="0" max="2000" step="10" inputmode="numeric" aria-label="Anzahl 59-mm-Buttons" />
+              <button type="button" aria-label="mehr 59-mm-Buttons">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-summary">
+          <p class="sum-title">Deine Kalkulation</p>
+          <div class="sum-line is-off" data-line="q25">
+            <span class="s-lab">25&nbsp;mm<small data-out="q25-lab"></small></span>
+            <span class="s-val" data-out="q25">—</span>
+          </div>
+          <div class="sum-line" data-line="q59">
+            <span class="s-lab">59&nbsp;mm<small data-out="q59-lab"></small></span>
+            <span class="s-val" data-out="q59">12,00 €</span>
+          </div>
+          <div class="calc-total">
+            <span class="t-lab">Gesamt</span>
+            <span class="t-val" data-out="total">12,00 €</span>
+          </div>
+          <p class="calc-note" data-out="min-note" hidden></p>
+          <p class="calc-kaution"><strong data-out="stueck-lab">20 Stück</strong> · inkl. Layout-Check, Druck, Schneiden &amp; Pressen. Abholung in Pforzheim kostenlos, Versand nach Aufwand.</p>
+        </div>
+      </div>
+      <p class="form-fineprint" style="margin-top:18px;">Richtpreis — den verbindlichen Festpreis bekommst du auf Anfrage. Brauchst du weniger als 20&nbsp;Stück oder beide Größen gemischt? Schreib mir einfach.</p>
     </div>
   </section>
 
@@ -150,7 +207,7 @@
       <div class="section-head">
         <p class="eyebrow">Muster</p>
         <h2>Aus der Werkstatt.</h2>
-        <p class="lead">Fotos folgen — sobald die ersten Serien fertig sind.</p>
+        <p class="lead">Eine kleine Auswahl fertiger Buttons — 25&nbsp;mm und 59&nbsp;mm, frisch aus der Presse.</p>
       </div>
       <div class="gallery-grid four">
         <div class="tile">
@@ -272,5 +329,6 @@
   </footer>
 
   <script src="site.js"></script>
+  <script src="rechner.js"></script>
 </body>
 </html>

@@ -71,7 +71,7 @@
         <a class="card feature reveal" href="#buttonmaschine" style="text-decoration:none; color:inherit;">
           <span class="num">02</span>
           <h3>Buttonmaschine</h3>
-          <p>Badgematic-Maschine für 59&nbsp;mm Buttons inkl. Verbrauchsmaterial. Perfekt für Vereinsfeste, DIY-Aktionen oder gemeinsame Bastel-Abende.</p>
+          <p>Badgematic-Maschine für 59&nbsp;mm Buttons. Rohlinge bekommst du nach Bedarf dazu. Perfekt für Vereinsfeste, DIY-Aktionen oder gemeinsame Bastel-Abende.</p>
           <span class="more">Preise &amp; Details →</span>
         </a>
 
@@ -233,7 +233,7 @@
           <ul style="margin:0; padding-left:18px; color:var(--ink);">
             <li>Badgematic Buttonmaschine</li>
             <li>Button-Rohlinge 59&nbsp;mm mit Sicherheitsnadel</li>
-            <li>Verbrauchsmaterial für 10 Buttons am ersten Tag inklusive</li>
+            <li>Verbrauchsmaterial (Rohlinge) nach Bedarf dazu — siehe Staffelpreise unten</li>
             <li>Kurze Einweisung in die Bedienung</li>
           </ul>
         </div>
@@ -248,7 +248,7 @@
         <tr>
           <td>1 Tag</td>
           <td class="price">15&nbsp;€</td>
-          <td>Inklusive Material für 10&nbsp;Buttons.</td>
+          <td>Tagespreis für die Maschine.</td>
         </tr>
         <tr>
           <td>3 Tage</td>
@@ -345,7 +345,7 @@
 
           <div class="calc-row">
             <span class="calc-label">Anzahl Buttons
-              <span class="calc-sub">0,25 € / Stück — Rabatt ab 300 / 600 / 900 Stück.</span>
+              <span class="calc-sub">Ab 100 Stück, in 100er-Schritten. 0,25 € / Stück — Rabatt ab 300 / 600 / 900.</span>
             </span>
             <div class="calc-quick" data-menge-quick>
               <button type="button" data-val="100">100</button>
@@ -355,12 +355,12 @@
             </div>
             <div class="calc-menge-row">
               <div class="stepper">
-                <button type="button" aria-label="weniger Buttons" onclick="(function(i){i.value=Math.max(0,(parseInt(i.value,10)||0)-50);i.dispatchEvent(new Event('input',{bubbles:true}));})(this.parentNode.querySelector('input'))">−</button>
-                <input type="number" data-menge-input value="100" min="0" max="1000" step="50" inputmode="numeric" aria-label="Anzahl Buttons" />
-                <button type="button" aria-label="mehr Buttons" onclick="(function(i){i.value=Math.min(1000,(parseInt(i.value,10)||0)+50);i.dispatchEvent(new Event('input',{bubbles:true}));})(this.parentNode.querySelector('input'))">+</button>
+                <button type="button" aria-label="weniger Buttons" onclick="(function(i){i.value=Math.max(0,(parseInt(i.value,10)||0)-100);i.dispatchEvent(new Event('input',{bubbles:true}));})(this.parentNode.querySelector('input'))">−</button>
+                <input type="number" data-menge-input value="100" min="100" max="1000" step="100" inputmode="numeric" aria-label="Anzahl Buttons" />
+                <button type="button" aria-label="mehr Buttons" onclick="(function(i){i.value=Math.min(1000,(parseInt(i.value,10)||0)+100);i.dispatchEvent(new Event('input',{bubbles:true}));})(this.parentNode.querySelector('input'))">+</button>
               </div>
             </div>
-            <input class="calc-slider" type="range" data-menge-slider value="100" min="0" max="1000" step="50" aria-label="Anzahl Buttons (Schieberegler)" />
+            <input class="calc-slider" type="range" data-menge-slider value="100" min="100" max="1000" step="100" aria-label="Anzahl Buttons (Schieberegler)" />
           </div>
         </div>
 
@@ -421,37 +421,81 @@
 
       <div class="info-block" style="margin-bottom:24px;">
         <h4>Seitenwände — optional zubuchbar</h4>
-        <p>Drei Seitenwände stehen zur Wahl: <strong>2× mit Fenster</strong> und <strong>1× geschlossen</strong> (ohne Fenster). So wird aus dem Sonnendach bei Wind oder Regen ein geschützter Raum. Hinweis: Das Zelt hat vier Seiten — mit drei Wänden bleibt eine Seite offen (Eingang).</p>
+        <p>Drei Seitenwände stehen zur Wahl: <strong>2× mit Fenster</strong> und <strong>1× geschlossen</strong> (ohne Fenster). So wird aus dem Sonnendach bei Wind oder Regen ein geschützter Raum. Je Wand <strong>4&nbsp;€ einmalig</strong> für die ganze Mietdauer — bewusst günstiger als bei gewerblichen Verleihern. Hinweis: Das Zelt hat vier Seiten — mit drei Wänden bleibt eine Seite offen (Eingang).</p>
       </div>
 
       <table class="spec-table">
-        <tr><th>Mietdauer</th><th>Preis</th><th>Hinweis</th></tr>
-        <tr>
-          <td>1 Tag</td>
-          <td class="price">35&nbsp;€</td>
-          <td>Für die einzelne Feier oder den Markttag.</td>
-        </tr>
-        <tr>
-          <td>Wochenende</td>
-          <td class="price">55&nbsp;€</td>
-          <td>Freitag bis Montag — das beliebteste Paket.</td>
-        </tr>
-        <tr>
-          <td>1 Woche</td>
-          <td class="price">120&nbsp;€</td>
-          <td>Sieben Tage am Stück.</td>
-        </tr>
-        <tr>
-          <td>Jeder weitere Tag</td>
-          <td class="price">+ 10&nbsp;€</td>
-          <td>Über die Woche hinaus, nach Absprache.</td>
-        </tr>
-        <tr>
-          <td>Kaution</td>
-          <td class="price">150&nbsp;€</td>
-          <td>Bar bei Abholung, vollständig zurück bei unbeschädigter Rückgabe.</td>
-        </tr>
+        <tr><th>Mietdauer</th><th>Preis gesamt</th><th>Das sind … pro Tag</th></tr>
+        <tr><td>1 Tag</td><td class="price">35&nbsp;€</td><td>35,00&nbsp;€ / Tag</td></tr>
+        <tr><td>2 Tage</td><td class="price">50&nbsp;€</td><td>25,00&nbsp;€ / Tag</td></tr>
+        <tr><td>3 Tage</td><td class="price">60&nbsp;€</td><td>20,00&nbsp;€ / Tag</td></tr>
+        <tr><td>5 Tage</td><td class="price">80&nbsp;€</td><td>16,00&nbsp;€ / Tag</td></tr>
+        <tr><td>7 Tage</td><td class="price">100&nbsp;€</td><td>≈ 14,30&nbsp;€ / Tag</td></tr>
+        <tr><td>Jeder weitere Tag</td><td class="price">+ 10&nbsp;€</td><td>über 7 Tage hinaus, nach Absprache</td></tr>
+        <tr><td>Seitenwand (optional)</td><td class="price">+ 4&nbsp;€</td><td>je Wand, einmalig für die ganze Miete</td></tr>
+        <tr><td>Kaution</td><td class="price">150&nbsp;€</td><td>kommt bei sauberer Rückgabe zurück</td></tr>
       </table>
+
+      <!-- ====== FALTPAVILLON-RECHNER ====== -->
+      <h3 style="margin:40px 0 16px; font-size:1.3rem;">Preis berechnen</h3>
+      <div class="calc" id="calc-zelt">
+        <div class="calc-controls">
+          <div class="calc-row">
+            <span class="calc-label">Mietdauer
+              <span class="calc-sub">Je länger du mietest, desto günstiger der einzelne Tag.</span>
+            </span>
+            <div class="stepper" data-step="tage">
+              <button type="button" aria-label="weniger Tage">−</button>
+              <input type="number" value="2" min="1" max="30" inputmode="numeric" aria-label="Anzahl Tage" />
+              <button type="button" aria-label="mehr Tage">+</button>
+            </div>
+          </div>
+
+          <div class="calc-row">
+            <span class="calc-label">Seitenwände dazu?
+              <span class="calc-sub">2× mit Fenster, 1× geschlossen — je 4 € einmalig für die ganze Miete.</span>
+            </span>
+            <div class="stepper" data-step="waende">
+              <button type="button" aria-label="weniger Seitenwände">−</button>
+              <input type="number" value="0" min="0" max="3" inputmode="numeric" aria-label="Anzahl Seitenwände" />
+              <button type="button" aria-label="mehr Seitenwände">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-summary">
+          <p class="sum-title">Deine Kalkulation</p>
+          <div class="sum-line">
+            <span class="s-lab">Faltpavillon · <span data-out="tage">2 Tage</span><small data-out="tag-rate">25,00 € / Tag</small></span>
+            <span class="s-val" data-out="zelt">50,00 €</span>
+          </div>
+          <div class="sum-line is-off" data-line="waende">
+            <span class="s-lab">Seitenwände<small data-out="waende-lab"></small></span>
+            <span class="s-val" data-out="waende">—</span>
+          </div>
+          <div class="calc-total">
+            <span class="t-lab">Mietpreis</span>
+            <span class="t-val" data-out="total">50,00 €</span>
+          </div>
+          <p class="calc-kaution">Zzgl. <strong>150&nbsp;€ Kaution</strong> bei Abholung — kommt nach unbeschädigter Rückgabe vollständig zurück.</p>
+        </div>
+      </div>
+
+      <!-- ====== VERFÜGBARKEITS-KALENDER (Pavillon) ====== -->
+      <div class="section-head" style="margin:48px 0 20px; max-width:56ch;">
+        <p class="eyebrow">Verfügbarkeit</p>
+        <h3 style="font-size:1.5rem; margin:8px 0 6px;">Wann ist der Pavillon frei?</h3>
+        <p style="font-size:15px; margin:0;">Eingetragene Termine sind die Zeiträume, in denen das Zelt bereits vermietet ist. Frag für freie Tage einfach an.</p>
+      </div>
+      <div class="calendar-wrap">
+        <iframe
+          class="calendar-frame"
+          title="Verfügbarkeit Faltpavillon"
+          src="https://calendar.google.com/calendar/embed?src=d4269190b012fb72e4d1de317744e4ac9c55750b974e9e4f9238882b793eb7ee%40group.calendar.google.com&ctz=Europe%2FBerlin"
+          loading="lazy"
+          scrolling="no"></iframe>
+      </div>
+      <p class="cal-legend"><span class="dot"></span> Eingetragene Einträge = Pavillon in diesem Zeitraum bereits reserviert.</p>
 
       <div class="info-block" style="margin-top:18px;">
         <h4>Wichtig zu Sicherheit &amp; Verankerung</h4>

@@ -24,6 +24,19 @@
   var TRAEGER_TAG     = 2;
   var DACHBOX_KAUTION = 150;
 
+  // Faltpavillon: Tagespreis-Staffel — je länger, desto günstiger der Tag.
+  var ZELT_TAGE = { 1: 35, 2: 50, 3: 60, 4: 70, 5: 80, 6: 90, 7: 100 };
+  function zeltPreis(tage) {
+    if (tage <= 7) return ZELT_TAGE[tage] || 35;
+    return ZELT_TAGE[7] + (tage - 7) * 10; // jeder weitere Tag +10 €
+  }
+  var ZELT_WAND    = 4;    // pro Seitenwand, einmalig für die ganze Miete (unter gewerblichem Niveau)
+  var ZELT_KAUTION = 150;
+
+  // Buttons-Bestellung (Buttonschmiede): Stückpreis je Tarif.
+  var BESTELL_TARIF = [0.60, 0.50]; // 0 = Standard, 1 = Faschingsgemeinde
+  var BESTELL_MIN   = 20;           // Mindestmenge gesamt
+
   // ----- Helfer --------------------------------------------
   function euro(n) {
     return n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
@@ -37,6 +50,7 @@
     var input = $('input', root);
     var min = parseInt(input.getAttribute('min'), 10);
     var max = parseInt(input.getAttribute('max'), 10);
+    var step = parseInt(input.getAttribute('step'), 10) || 1;
     var btns = $all('button', root);
 
     function set(v) {
@@ -46,8 +60,8 @@
       btns[1].disabled = v >= max;
       onChange(v);
     }
-    btns[0].addEventListener('click', function () { set(parseInt(input.value, 10) - 1); });
-    btns[1].addEventListener('click', function () { set(parseInt(input.value, 10) + 1); });
+    btns[0].addEventListener('click', function () { set(parseInt(input.value, 10) - step); });
+    btns[1].addEventListener('click', function () { set(parseInt(input.value, 10) + step); });
     input.addEventListener('input', function () { set(parseInt(input.value, 10)); });
     set(parseInt(input.value, 10));
     return { set: set };
@@ -162,7 +176,8 @@
     wireSegmented($('[data-seg="stanze"]', el), function (v) { state.stanze = v; render(); });
 
     function setMenge(v) {
-      v = clamp(isNaN(v) ? 0 : Math.round(v), 0, 1000);
+      // nur volle 100er, ab 100 Stück
+      v = clamp(isNaN(v) ? 100 : Math.round(v / 100) * 100, 100, 1000);
       state.menge = v;
       mengeInput.value = v;
       mengeSlider.value = v;
@@ -177,8 +192,94 @@
     setMenge(state.menge);
   }
 
+  // ====================================================================
+  //  FALTPAVILLON-RECHNER (Tagespreis-Staffel + Seitenwände)
+  // ====================================================================
+  function initZelt() {
+    var el = $('#calc-zelt');
+    if (!el) return;
+
+    var state = { tage: 2, waende: 0 };
+
+    var sTage    = $('[data-out="tage"]', el);
+    var sRate    = $('[data-out="tag-rate"]', el);
+    var sZelt    = $('[data-out="zelt"]', el);
+    var sWaende  = $('[data-out="waende"]', el);
+    var waendeLine = $('[data-line="waende"]', el);
+    var sWaendeLab = $('[data-out="waende-lab"]', el);
+    var sTotal   = $('[data-out="total"]', el);
+
+    function render() {
+      var zeltCost = zeltPreis(state.tage);
+      var waendeCost = state.waende * ZELT_WAND;
+      var total = zeltCost + waendeCost;
+
+      sTage.textContent = state.tage + (state.tage === 1 ? ' Tag' : ' Tage');
+      sRate.textContent = euro(zeltCost / state.tage) + ' / Tag';
+      sZelt.textContent = euro(zeltCost);
+      waendeLine.classList.toggle('is-off', state.waende === 0);
+      sWaendeLab.textContent = state.waende > 0
+        ? state.waende + '× je ' + euro(ZELT_WAND) : '';
+      sWaende.textContent = state.waende > 0 ? euro(waendeCost) : '—';
+      sTotal.textContent = euro(total);
+    }
+
+    wireStepper($('[data-step="tage"]', el), function (v) { state.tage = v; render(); });
+    wireStepper($('[data-step="waende"]', el), function (v) { state.waende = v; render(); });
+    render();
+  }
+
+  // ====================================================================
+  //  BUTTONS-BESTELL-RECHNER (Buttonschmiede)
+  // ====================================================================
+  function initBestellung() {
+    var el = $('#calc-bestellung');
+    if (!el) return;
+
+    var state = { tarif: 0, q25: 0, q59: 20 };
+
+    var sQ25     = $('[data-out="q25"]', el);
+    var sQ59     = $('[data-out="q59"]', el);
+    var q25Line  = $('[data-line="q25"]', el);
+    var q59Line  = $('[data-line="q59"]', el);
+    var sQ25Lab  = $('[data-out="q25-lab"]', el);
+    var sQ59Lab  = $('[data-out="q59-lab"]', el);
+    var sTotal   = $('[data-out="total"]', el);
+    var minNote  = $('[data-out="min-note"]', el);
+    var stueckLab = $('[data-out="stueck-lab"]', el);
+
+    function render() {
+      var preis = BESTELL_TARIF[state.tarif];
+      var total = state.q25 + state.q59;
+      var c25 = state.q25 * preis;
+      var c59 = state.q59 * preis;
+
+      q25Line.classList.toggle('is-off', state.q25 === 0);
+      q59Line.classList.toggle('is-off', state.q59 === 0);
+      sQ25Lab.textContent = state.q25 > 0 ? state.q25 + ' × ' + euro(preis) : '';
+      sQ59Lab.textContent = state.q59 > 0 ? state.q59 + ' × ' + euro(preis) : '';
+      sQ25.textContent = state.q25 > 0 ? euro(c25) : '—';
+      sQ59.textContent = state.q59 > 0 ? euro(c59) : '—';
+      sTotal.textContent = euro(c25 + c59);
+      stueckLab.textContent = total + ' Stück' + (state.tarif === 1 ? ' · Faschingsbonus' : '');
+
+      if (total > 0 && total < BESTELL_MIN) {
+        minNote.hidden = false;
+        minNote.textContent = 'Mindestmenge ' + BESTELL_MIN + ' Stück — es fehlen noch ' +
+          (BESTELL_MIN - total) + '. Du brauchst weniger? Frag trotzdem an.';
+      } else {
+        minNote.hidden = true;
+      }
+    }
+
+    wireSegmented($('[data-seg="tarif"]', el), function (v) { state.tarif = v ? 1 : 0; render(); });
+    wireStepper($('[data-step="q25"]', el), function (v) { state.q25 = v; render(); });
+    wireStepper($('[data-step="q59"]', el), function (v) { state.q59 = v; render(); });
+    render();
+  }
+
   // ----- Start ---------------------------------------------
-  function start() { initDachbox(); initButton(); }
+  function start() { initDachbox(); initButton(); initZelt(); initBestellung(); }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', start);
   } else {
