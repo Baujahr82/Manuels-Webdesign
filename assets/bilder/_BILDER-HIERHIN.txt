@@ -1,0 +1,55 @@
+BILDER FÜR DIE WEBSEITE
+========================
+
+Lege ALLE Fotos hier in diesen Ordner (assets/bilder/).
+
+NEU: Die Endung ist jetzt EGAL.
+   .jpg, .jpeg, .png oder .webp werden automatisch gefunden —
+   auch groß geschrieben (.JPG, .PNG). Du musst nichts umbenennen
+   und nichts umwandeln. Wichtig ist nur der NAME (klein geschrieben).
+
+Solange eine Datei fehlt, zeigt die Seite an dieser Stelle einen
+Platzhalter mit dem Dateinamen. Sobald die Datei da ist, erscheint
+das Foto automatisch.
+
+Diese Namen werden gebraucht (Endung egal):
+
+  STARTSEITE
+    portrait              dein Porträt-Foto ("Wer dahintersteckt")
+                          möglichst quadratisch, mind. 600 x 600 Pixel
+
+  VERMIETUNG
+    thuledachbox1         Thule Dachbox — Galerie, Bild 1
+    thuledachbox2         Thule Dachbox — Galerie, Bild 2
+    thuledachbox3         Thule Dachbox — Galerie, Bild 3
+    thuledachbox4         Thule Dachbox — Galerie, Bild 4
+
+    buttonmaschine        Badgematic Buttonmaschine
+    stanzmaschine         Papierstanze
+
+    pavillon1             Faltpavillon, Hauptbild
+    pavillon2             Faltpavillon, Galerie
+    pavillon3             Faltpavillon, Galerie
+
+  BUTTONS (Vermietungs- + Buttons-Seite)
+    button1               Beispiel-Button 1
+    button2               Beispiel-Button 2
+    button3               Beispiel-Button 3
+    button4               Beispiel-Button 4
+
+  WEBDESIGN (Projekt-Vorschauen)
+    keibelhexen           Projekt-Vorschau Keibelhexen
+    jogi-weiss            Projekt-Vorschau Jogi Weiß
+
+
+SO LÄDST DU DIE BILDER BEI GITHUB HOCH
+---------------------------------------
+1. Öffne dein Repository auf github.com.
+2. Klicke dich in den Ordner  assets / bilder
+3. Oben rechts:  "Add file"  ->  "Upload files"
+4. Ziehe deine Fotos ins Fenster (oder "choose your files").
+5. Jede Datei muss exakt so heißen wie oben (klein geschrieben).
+   Die Endung ist egal — .jpg, .jpeg, .png, .webp gehen alle.
+   (Heißt dein Foto z. B. "IMG_4821.JPG", benenne es vorher um in
+   "thuledachbox1.jpg" — oder lass die Endung, sie passt von allein.)
+6. Unten "Commit changes" klicken — fertig.
