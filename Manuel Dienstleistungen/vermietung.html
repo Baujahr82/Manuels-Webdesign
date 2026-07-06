@@ -6,9 +6,7 @@
   <title>Vermietung — MR-Dienstleistungen</title>
   <meta name="description" content="Dachbox und mehr — unkompliziert leihen statt kaufen. Abholung in Pforzheim, faire Preise.">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Schriften werden lokal geladen (siehe styles.css) — keine Google-Server -->
   <link rel="stylesheet" href="styles.css">
   <style>
     /* Vermietung: schmalere, ruhigere Spalte — wirkt eleganter, weniger wuchtig */
@@ -194,6 +192,7 @@
             <span class="t-val" data-out="total">35,00 €</span>
           </div>
           <p class="calc-kaution">Zzgl. <strong>150&nbsp;€ Kaution</strong> bei Abholung — kommt nach unbeschädigter Rückgabe vollständig zurück.</p>
+          <button class="btn btn-primary" type="button" data-calc-send>Diese Kalkulation anfragen</button>
         </div>
       </div>
 
@@ -204,12 +203,13 @@
         <p style="font-size:15px; margin:0;">Eingetragene Termine sind die Zeiträume, in denen die Thule Dachbox bereits vermietet ist. Frag für freie Tage einfach an.</p>
       </div>
       <div class="calendar-wrap">
-        <iframe
-          class="calendar-frame"
-          title="Verfügbarkeit Thule Dachbox"
-          src="https://calendar.google.com/calendar/embed?src=372eaf3f11cf7bf5c75b68cf742d3a841f4218680f16a06a0d6ff6eee01a4472%40group.calendar.google.com&ctz=Europe%2FBerlin"
-          loading="lazy"
-          scrolling="no"></iframe>
+        <div class="cal-consent"
+          data-cal-src="https://calendar.google.com/calendar/embed?src=372eaf3f11cf7bf5c75b68cf742d3a841f4218680f16a06a0d6ff6eee01a4472%40group.calendar.google.com&ctz=Europe%2FBerlin"
+          data-cal-title="Verfügbarkeit Thule Dachbox">
+          <h4>Verfügbarkeits-Kalender</h4>
+          <p>Der Kalender wird von Google bereitgestellt. Erst nach deinem Klick wird eine Verbindung zu Google-Servern aufgebaut und dabei deine IP-Adresse übertragen.</p>
+          <button type="button" class="btn btn-primary">Kalender laden</button>
+        </div>
       </div>
       <p class="cal-legend"><span class="dot"></span> Eingetragene Einträge = Dachbox in diesem Zeitraum bereits reserviert.</p>
 
@@ -352,15 +352,16 @@
               <button type="button" data-val="300">300</button>
               <button type="button" data-val="600">600</button>
               <button type="button" data-val="900">900</button>
+              <button type="button" data-val="3000">3000</button>
             </div>
             <div class="calc-menge-row">
               <div class="stepper">
                 <button type="button" aria-label="weniger Buttons" onclick="(function(i){i.value=Math.max(0,(parseInt(i.value,10)||0)-100);i.dispatchEvent(new Event('input',{bubbles:true}));})(this.parentNode.querySelector('input'))">−</button>
-                <input type="number" data-menge-input value="100" min="100" max="1000" step="100" inputmode="numeric" aria-label="Anzahl Buttons" />
-                <button type="button" aria-label="mehr Buttons" onclick="(function(i){i.value=Math.min(1000,(parseInt(i.value,10)||0)+100);i.dispatchEvent(new Event('input',{bubbles:true}));})(this.parentNode.querySelector('input'))">+</button>
+                <input type="number" data-menge-input value="100" min="100" max="3000" step="100" inputmode="numeric" aria-label="Anzahl Buttons" />
+                <button type="button" aria-label="mehr Buttons" onclick="(function(i){i.value=Math.min(3000,(parseInt(i.value,10)||0)+100);i.dispatchEvent(new Event('input',{bubbles:true}));})(this.parentNode.querySelector('input'))">+</button>
               </div>
             </div>
-            <input class="calc-slider" type="range" data-menge-slider value="100" min="100" max="1000" step="100" aria-label="Anzahl Buttons (Schieberegler)" />
+            <input class="calc-slider" type="range" data-menge-slider value="100" min="100" max="3000" step="100" aria-label="Anzahl Buttons (Schieberegler)" />
           </div>
         </div>
 
@@ -384,6 +385,7 @@
           </div>
           <p class="calc-note" data-out="rabatt-note" hidden></p>
           <p class="calc-kaution">Zzgl. <strong>100&nbsp;€ Kaution</strong> bei Abholung — kommt nach sauberer, unbeschädigter Rückgabe vollständig zurück.</p>
+          <button class="btn btn-primary" type="button" data-calc-send>Diese Kalkulation anfragen</button>
         </div>
       </div>
 
@@ -478,6 +480,7 @@
             <span class="t-val" data-out="total">50,00 €</span>
           </div>
           <p class="calc-kaution">Zzgl. <strong>150&nbsp;€ Kaution</strong> bei Abholung — kommt nach unbeschädigter Rückgabe vollständig zurück.</p>
+          <button class="btn btn-primary" type="button" data-calc-send>Diese Kalkulation anfragen</button>
         </div>
       </div>
 
@@ -488,12 +491,13 @@
         <p style="font-size:15px; margin:0;">Eingetragene Termine sind die Zeiträume, in denen das Zelt bereits vermietet ist. Frag für freie Tage einfach an.</p>
       </div>
       <div class="calendar-wrap">
-        <iframe
-          class="calendar-frame"
-          title="Verfügbarkeit Faltpavillon"
-          src="https://calendar.google.com/calendar/embed?src=d4269190b012fb72e4d1de317744e4ac9c55750b974e9e4f9238882b793eb7ee%40group.calendar.google.com&ctz=Europe%2FBerlin"
-          loading="lazy"
-          scrolling="no"></iframe>
+        <div class="cal-consent"
+          data-cal-src="https://calendar.google.com/calendar/embed?src=d4269190b012fb72e4d1de317744e4ac9c55750b974e9e4f9238882b793eb7ee%40group.calendar.google.com&ctz=Europe%2FBerlin"
+          data-cal-title="Verfügbarkeit Faltpavillon">
+          <h4>Verfügbarkeits-Kalender</h4>
+          <p>Der Kalender wird von Google bereitgestellt. Erst nach deinem Klick wird eine Verbindung zu Google-Servern aufgebaut und dabei deine IP-Adresse übertragen.</p>
+          <button type="button" class="btn btn-primary">Kalender laden</button>
+        </div>
       </div>
       <p class="cal-legend"><span class="dot"></span> Eingetragene Einträge = Pavillon in diesem Zeitraum bereits reserviert.</p>
 

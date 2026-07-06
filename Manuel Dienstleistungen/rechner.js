@@ -79,6 +79,28 @@
     });
   }
 
+  // ----- „Diese Kalkulation anfragen“ ------------------------
+  //  Übernimmt die aktuelle Kalkulation ins Kontaktformular
+  //  und scrollt sanft dorthin.
+  function wireSend(el, makeText) {
+    var btn = $('[data-calc-send]', el);
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var t = makeText();
+      var subj = document.getElementById('c-subject');
+      var msg  = document.getElementById('c-message');
+      if (subj) subj.value = t.subject;
+      if (msg) msg.value = t.message;
+      var ziel = document.getElementById('kontakt');
+      if (ziel) {
+        var y = ziel.getBoundingClientRect().top + window.pageYOffset - 70;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    });
+  }
+
+  function tage(n) { return n + (n === 1 ? ' Tag' : ' Tage'); }
+
   // ====================================================================
   //  DACHBOX-RECHNER
   // ====================================================================
@@ -108,6 +130,14 @@
 
     wireStepper($('[data-step="tage"]', el), function (v) { state.tage = v; render(); });
     wireSegmented($('[data-seg="traeger"]', el), function (v) { state.traeger = v; render(); });
+    wireSend(el, function () {
+      return {
+        subject: 'Dachbox, ' + tage(state.tage) + (state.traeger ? ' + Dachträger' : ''),
+        message: 'Hallo Manuel,\n\nich möchte die Dachbox anfragen:\n· Mietdauer: ' + tage(state.tage) +
+          '\n· Dachträger: ' + (state.traeger ? 'ja' : 'nein') +
+          '\n· Richtpreis laut Rechner: ' + sTotal.textContent + ' (zzgl. 150 € Kaution)\n\nWunschzeitraum: '
+      };
+    });
     render();
   }
 
@@ -177,7 +207,7 @@
 
     function setMenge(v) {
       // nur volle 100er, ab 100 Stück
-      v = clamp(isNaN(v) ? 100 : Math.round(v / 100) * 100, 100, 1000);
+      v = clamp(isNaN(v) ? 100 : Math.round(v / 100) * 100, 100, 3000);
       state.menge = v;
       mengeInput.value = v;
       mengeSlider.value = v;
@@ -187,6 +217,16 @@
     mengeSlider.addEventListener('input', function () { setMenge(parseInt(mengeSlider.value, 10)); });
     quickBtns.forEach(function (b) {
       b.addEventListener('click', function () { setMenge(parseInt(b.getAttribute('data-val'), 10)); });
+    });
+
+    wireSend(el, function () {
+      return {
+        subject: 'Buttonmaschine, ' + tage(state.tage) + ', ' + state.menge.toLocaleString('de-DE') + ' Buttons',
+        message: 'Hallo Manuel,\n\nich möchte die Buttonmaschine anfragen:\n· Mietdauer: ' + tage(state.tage) +
+          '\n· Papierstanze: ' + (state.stanze ? 'ja' : 'nein') +
+          '\n· Button-Rohlinge: ' + state.menge.toLocaleString('de-DE') + ' Stück' +
+          '\n· Richtpreis laut Rechner: ' + sTotal.textContent + ' (zzgl. 100 € Kaution)\n\nWunschzeitraum: '
+      };
     });
 
     setMenge(state.menge);
@@ -226,6 +266,14 @@
 
     wireStepper($('[data-step="tage"]', el), function (v) { state.tage = v; render(); });
     wireStepper($('[data-step="waende"]', el), function (v) { state.waende = v; render(); });
+    wireSend(el, function () {
+      return {
+        subject: 'Faltpavillon, ' + tage(state.tage) + (state.waende > 0 ? ', ' + state.waende + ' Seitenwände' : ''),
+        message: 'Hallo Manuel,\n\nich möchte den Faltpavillon anfragen:\n· Mietdauer: ' + tage(state.tage) +
+          '\n· Seitenwände: ' + (state.waende > 0 ? state.waende : 'keine') +
+          '\n· Richtpreis laut Rechner: ' + sTotal.textContent + ' (zzgl. 150 € Kaution)\n\nWunschzeitraum: '
+      };
+    });
     render();
   }
 
@@ -275,6 +323,18 @@
     wireSegmented($('[data-seg="tarif"]', el), function (v) { state.tarif = v ? 1 : 0; render(); });
     wireStepper($('[data-step="q25"]', el), function (v) { state.q25 = v; render(); });
     wireStepper($('[data-step="q59"]', el), function (v) { state.q59 = v; render(); });
+    wireSend(el, function () {
+      var teile = [];
+      if (state.q25 > 0) teile.push(state.q25 + '× 25 mm');
+      if (state.q59 > 0) teile.push(state.q59 + '× 59 mm');
+      return {
+        subject: 'Buttons: ' + (teile.join(', ') || 'Menge offen') + (state.tarif === 1 ? ' (Faschingsgemeinde)' : ''),
+        message: 'Hallo Manuel,\n\nich möchte Buttons anfragen:\n· ' + (teile.join('\n· ') || 'Menge noch offen') +
+          '\n· Tarif: ' + (state.tarif === 1 ? 'Faschingsgemeinde (0,50 €/Stück)' : 'Standard (0,60 €/Stück)') +
+          '\n· Richtpreis laut Rechner: ' + sTotal.textContent +
+          '\n\nMotiv / Anlass: '
+      };
+    });
     render();
   }
 

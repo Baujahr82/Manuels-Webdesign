@@ -97,6 +97,37 @@
     });
   });
 
+  // ----- Zwei-Klick-Kalender (DSGVO) ------------------------
+  //  Google-Kalender wird erst geladen, wenn die Besucherin
+  //  aktiv klickt. Die Entscheidung wird gemerkt (localStorage).
+  var CAL_KEY = 'mr-cal-consent';
+  function loadCal(box) {
+    if (!box.parentNode) return;
+    var frame = document.createElement('iframe');
+    frame.className = 'calendar-frame';
+    frame.title = box.getAttribute('data-cal-title') || 'Verfügbarkeits-Kalender';
+    frame.src = box.getAttribute('data-cal-src');
+    frame.loading = 'lazy';
+    frame.setAttribute('scrolling', 'no');
+    box.parentNode.replaceChild(frame, box);
+  }
+  var calBoxes = Array.prototype.slice.call(document.querySelectorAll('[data-cal-src]'));
+  if (calBoxes.length) {
+    var calConsent = false;
+    try { calConsent = localStorage.getItem(CAL_KEY) === '1'; } catch (e) {}
+    if (calConsent) {
+      calBoxes.forEach(loadCal);
+    } else {
+      calBoxes.forEach(function (box) {
+        var btn = box.querySelector('button');
+        if (btn) btn.addEventListener('click', function () {
+          try { localStorage.setItem(CAL_KEY, '1'); } catch (e) {}
+          calBoxes.forEach(loadCal);
+        });
+      });
+    }
+  }
+
   // ----- Anfrage-Seite: Fortschrittsanzeige für Akkordeon
   var progressEl = document.getElementById('anfrage-progress');
   if (progressEl) {
