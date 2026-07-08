@@ -33,8 +33,8 @@
   var ZELT_WAND    = 4;    // pro Seitenwand, einmalig für die ganze Miete (unter gewerblichem Niveau)
   var ZELT_KAUTION = 150;
 
-  // Buttons-Bestellung (Buttonschmiede): Stückpreis je Tarif.
-  var BESTELL_TARIF = [0.60, 0.50]; // 0 = Standard, 1 = Faschingsgemeinde
+  // Buttons-Bestellung (Buttonschmiede): einheitlicher Stückpreis.
+  var BESTELL_PREIS = 0.55; // Einheitspreis pro Button
   var BESTELL_MIN   = 20;           // Mindestmenge gesamt
 
   // ----- Helfer --------------------------------------------
@@ -284,7 +284,7 @@
     var el = $('#calc-bestellung');
     if (!el) return;
 
-    var state = { tarif: 0, q25: 0, q59: 20 };
+    var state = { q25: 0, q59: 20 };
 
     var sQ25     = $('[data-out="q25"]', el);
     var sQ59     = $('[data-out="q59"]', el);
@@ -297,7 +297,7 @@
     var stueckLab = $('[data-out="stueck-lab"]', el);
 
     function render() {
-      var preis = BESTELL_TARIF[state.tarif];
+      var preis = BESTELL_PREIS;
       var total = state.q25 + state.q59;
       var c25 = state.q25 * preis;
       var c59 = state.q59 * preis;
@@ -309,7 +309,7 @@
       sQ25.textContent = state.q25 > 0 ? euro(c25) : '—';
       sQ59.textContent = state.q59 > 0 ? euro(c59) : '—';
       sTotal.textContent = euro(c25 + c59);
-      stueckLab.textContent = total + ' Stück' + (state.tarif === 1 ? ' · Faschingsbonus' : '');
+      stueckLab.textContent = total + ' Stück';
 
       if (total > 0 && total < BESTELL_MIN) {
         minNote.hidden = false;
@@ -320,7 +320,6 @@
       }
     }
 
-    wireSegmented($('[data-seg="tarif"]', el), function (v) { state.tarif = v ? 1 : 0; render(); });
     wireStepper($('[data-step="q25"]', el), function (v) { state.q25 = v; render(); });
     wireStepper($('[data-step="q59"]', el), function (v) { state.q59 = v; render(); });
     wireSend(el, function () {
@@ -328,9 +327,9 @@
       if (state.q25 > 0) teile.push(state.q25 + '× 25 mm');
       if (state.q59 > 0) teile.push(state.q59 + '× 59 mm');
       return {
-        subject: 'Buttons: ' + (teile.join(', ') || 'Menge offen') + (state.tarif === 1 ? ' (Faschingsgemeinde)' : ''),
+        subject: 'Buttons: ' + (teile.join(', ') || 'Menge offen'),
         message: 'Hallo Manuel,\n\nich möchte Buttons anfragen:\n· ' + (teile.join('\n· ') || 'Menge noch offen') +
-          '\n· Tarif: ' + (state.tarif === 1 ? 'Faschingsgemeinde (0,50 €/Stück)' : 'Standard (0,60 €/Stück)') +
+          '\n· Preis: 0,55 €/Stück' +
           '\n· Richtpreis laut Rechner: ' + sTotal.textContent +
           '\n\nMotiv / Anlass: '
       };

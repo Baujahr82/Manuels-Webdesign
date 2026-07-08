@@ -572,6 +572,26 @@ a { color: var(--mint-dark); text-decoration: none; }
   margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
+/* --- Preis-Karten (Buttonschmiede) -------------------------- */
+.price-card, .price-why { gap: 10px; }
+.price-card:hover, .price-why:hover { transform: none; }
+.price-big {
+  font-family: var(--font-display); font-weight: 700; color: var(--ink);
+  font-size: clamp(2.4rem, 4vw, 3.2rem); line-height: 1.05; margin: 0;
+}
+.price-big span { font-size: .38em; font-weight: 500; opacity: .7; }
+.price-sub { color: var(--ink); margin: 0; }
+.price-includes {
+  list-style: none; margin: 6px 0 0; padding: 0;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.price-includes li {
+  color: var(--ink); font-size: 15px; line-height: 1.4;
+  display: flex; gap: 10px; align-items: baseline;
+}
+.price-includes li::before { content: "✦"; color: var(--mint-dark); font-size: 12px; flex: none; }
+.price-fine { color: var(--ink); opacity: .6; font-size: 14px; margin: 0; }
+
 /* --- Info-Block (Hinweis-Karte) ---------------------------- */
 .info-block {
   background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--mint);
