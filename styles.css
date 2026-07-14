@@ -581,6 +581,17 @@ a { color: var(--mint-dark); text-decoration: none; }
 }
 .price-big span { font-size: .38em; font-weight: 500; opacity: .7; }
 .price-sub { color: var(--ink); margin: 0; }
+.price-table {
+  width: 100%; border-collapse: collapse; margin: 4px 0 0;
+  font-size: 15px; font-family: var(--font-body);
+}
+.price-table td {
+  padding: 7px 0; border-bottom: 1px solid var(--line); color: var(--ink);
+}
+.price-table tr:last-child td { border-bottom: none; }
+.price-table td:last-child {
+  text-align: right; font-weight: 600; color: var(--mint-dark);
+}
 .price-includes {
   list-style: none; margin: 6px 0 0; padding: 0;
   display: flex; flex-direction: column; gap: 8px;

@@ -33,8 +33,25 @@
   var ZELT_WAND    = 4;    // pro Seitenwand, einmalig für die ganze Miete (unter gewerblichem Niveau)
   var ZELT_KAUTION = 150;
 
-  // Buttons-Bestellung (Buttonschmiede): einheitlicher Stückpreis.
-  var BESTELL_PREIS = 0.55; // Einheitspreis pro Button
+  // Buttons-Bestellung (Buttonschmiede): Staffelpreis nach Gesamtmenge.
+  // Staffel: an den Bruchpunkten der recherchierten Konkurrenz orientiert,
+  // pro Stufe minimal günstiger als der jeweils günstigste Vergleichspreis,
+  // nie unter 0,50 € pro Stück (Floor erst ab 500 Stück erreicht).
+  var BESTELL_STAFFEL = [
+    { bis: 29,        preis: 1.00 },
+    { bis: 49,        preis: 0.85 },
+    { bis: 99,        preis: 0.68 },
+    { bis: 199,       preis: 0.60 },
+    { bis: 499,       preis: 0.55 },
+    { bis: Infinity,  preis: 0.50 }
+  ];
+  function preisFuerMenge(menge) {
+    for (var i = 0; i < BESTELL_STAFFEL.length; i++) {
+      if (menge <= BESTELL_STAFFEL[i].bis) return BESTELL_STAFFEL[i].preis;
+    }
+    return BESTELL_STAFFEL[BESTELL_STAFFEL.length - 1].preis;
+  }
+  var BESTELL_VERSAND = 8.50; // Pauschale Porto, Verpackung & Versicherung (DHL-Paket)
   var BESTELL_MIN   = 20;           // Mindestmenge gesamt
 
   // ----- Helfer --------------------------------------------
@@ -284,32 +301,37 @@
     var el = $('#calc-bestellung');
     if (!el) return;
 
-    var state = { q25: 0, q59: 20 };
+    var state = { q25: 0, q59: 20, versand: 0 };
 
     var sQ25     = $('[data-out="q25"]', el);
     var sQ59     = $('[data-out="q59"]', el);
     var q25Line  = $('[data-line="q25"]', el);
     var q59Line  = $('[data-line="q59"]', el);
+    var versLine = $('[data-line="versand"]', el);
     var sQ25Lab  = $('[data-out="q25-lab"]', el);
     var sQ59Lab  = $('[data-out="q59-lab"]', el);
+    var sVersand = $('[data-out="versand"]', el);
     var sTotal   = $('[data-out="total"]', el);
     var minNote  = $('[data-out="min-note"]', el);
     var stueckLab = $('[data-out="stueck-lab"]', el);
 
     function render() {
-      var preis = BESTELL_PREIS;
       var total = state.q25 + state.q59;
+      var preis = preisFuerMenge(total);
       var c25 = state.q25 * preis;
       var c59 = state.q59 * preis;
+      var versandKosten = state.versand ? BESTELL_VERSAND : 0;
 
       q25Line.classList.toggle('is-off', state.q25 === 0);
       q59Line.classList.toggle('is-off', state.q59 === 0);
+      versLine.classList.toggle('is-off', !state.versand);
       sQ25Lab.textContent = state.q25 > 0 ? state.q25 + ' × ' + euro(preis) : '';
       sQ59Lab.textContent = state.q59 > 0 ? state.q59 + ' × ' + euro(preis) : '';
       sQ25.textContent = state.q25 > 0 ? euro(c25) : '—';
       sQ59.textContent = state.q59 > 0 ? euro(c59) : '—';
-      sTotal.textContent = euro(c25 + c59);
-      stueckLab.textContent = total + ' Stück';
+      sVersand.textContent = state.versand ? euro(versandKosten) : '—';
+      sTotal.textContent = euro(c25 + c59 + versandKosten);
+      stueckLab.textContent = total + ' Stück · ' + euro(preis) + '/Stück';
 
       if (total > 0 && total < BESTELL_MIN) {
         minNote.hidden = false;
@@ -322,6 +344,7 @@
 
     wireStepper($('[data-step="q25"]', el), function (v) { state.q25 = v; render(); });
     wireStepper($('[data-step="q59"]', el), function (v) { state.q59 = v; render(); });
+    wireSegmented($('[data-seg="versand"]', el), function (v) { state.versand = v; render(); });
     wireSend(el, function () {
       var teile = [];
       if (state.q25 > 0) teile.push(state.q25 + '× 25 mm');
@@ -329,7 +352,8 @@
       return {
         subject: 'Buttons: ' + (teile.join(', ') || 'Menge offen'),
         message: 'Hallo Manuel,\n\nich möchte Buttons anfragen:\n· ' + (teile.join('\n· ') || 'Menge noch offen') +
-          '\n· Preis: 0,55 €/Stück' +
+          '\n· Staffelpreis: ' + euro(preisFuerMenge(state.q25 + state.q59)) + '/Stück' +
+          '\n· ' + (state.versand ? 'Versand als DHL-Paket (8,50 €)' : 'Abholung in Pforzheim (kostenlos)') +
           '\n· Richtpreis laut Rechner: ' + sTotal.textContent +
           '\n\nMotiv / Anlass: '
       };
