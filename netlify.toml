@@ -26,3 +26,19 @@
 #
 # Das gleiche nochmal für das Formular "anfrage":
 #   Site settings → Forms → "anfrage" → Form notifications → ...
+
+# ------------------------------------------------------------------
+# Sicherheits-Header. Die CSP ist die technische Garantie dafür,
+# dass NIE Schriften, Skripte oder Bilder von fremden Servern
+# (z. B. Google Fonts in den USA) nachgeladen werden können.
+# Nur der Google-Kalender darf als iframe geladen werden — und der
+# erst nach ausdrücklichem Klick der Besucherin.
+# ------------------------------------------------------------------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-src https://calendar.google.com; form-action 'self'; base-uri 'self'; object-src 'none'"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"

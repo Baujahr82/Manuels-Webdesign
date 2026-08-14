@@ -119,13 +119,38 @@
       calBoxes.forEach(loadCal);
     } else {
       calBoxes.forEach(function (box) {
-        var btn = box.querySelector('button');
-        if (btn) btn.addEventListener('click', function () {
+        var yes = box.querySelector('[data-cal-accept]');
+        var no = box.querySelector('[data-cal-decline]');
+        if (yes) yes.addEventListener('click', function () {
           try { localStorage.setItem(CAL_KEY, '1'); } catch (e) {}
           calBoxes.forEach(loadCal);
         });
+        if (no) no.addEventListener('click', function () {
+          try { localStorage.setItem(CAL_KEY, '0'); } catch (e) {}
+          calBoxes.forEach(function (b) {
+            var acts = b.querySelector('.consent-actions');
+            if (!acts) return;
+            var note = b.querySelector('.consent-note');
+            if (!note) {
+              note = document.createElement('p');
+              note.className = 'consent-note';
+              acts.parentNode.appendChild(note);
+            }
+            note.textContent = 'Kalender bleibt aus. Es wurde keine Verbindung zu Google aufgebaut.';
+          });
+        });
       });
     }
+  }
+
+  // ----- Einwilligung widerrufen (Link/Knopf in der Datenschutzerklärung)
+  var resetBtn = document.getElementById('consent-reset');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', function () {
+      try { localStorage.removeItem(CAL_KEY); } catch (e) {}
+      var out = document.getElementById('consent-reset-status');
+      if (out) out.textContent = 'Erledigt — deine Kalender-Einwilligung wurde gelöscht. Beim nächsten Besuch wirst du wieder gefragt.';
+    });
   }
 
   // ----- Anfrage-Seite: Fortschrittsanzeige für Akkordeon
