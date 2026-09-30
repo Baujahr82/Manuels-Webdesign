@@ -70,16 +70,17 @@
     var step = parseInt(input.getAttribute('step'), 10) || 1;
     var btns = $all('button', root);
 
-    function set(v) {
+    function set(v, typing) {
       v = clamp(isNaN(v) ? min : v, min, max);
-      input.value = v;
+      if (!typing) input.value = v;
       btns[0].disabled = v <= min;
       btns[1].disabled = v >= max;
       onChange(v);
     }
     btns[0].addEventListener('click', function () { set(parseInt(input.value, 10) - step); });
     btns[1].addEventListener('click', function () { set(parseInt(input.value, 10) + step); });
-    input.addEventListener('input', function () { set(parseInt(input.value, 10)); });
+    input.addEventListener('input', function () { set(parseInt(input.value, 10), true); });
+    input.addEventListener('change', function () { set(parseInt(input.value, 10)); });
     set(parseInt(input.value, 10));
     return { set: set };
   }
@@ -89,8 +90,9 @@
     var btns = $all('button', root);
     btns.forEach(function (b) {
       b.addEventListener('click', function () {
-        btns.forEach(function (x) { x.classList.remove('is-on'); });
+        btns.forEach(function (x) { x.classList.remove('is-on'); x.setAttribute('aria-pressed', 'false'); });
         b.classList.add('is-on');
+        b.setAttribute('aria-pressed', 'true');
         onChange(b.getAttribute('data-val') === '1');
       });
     });

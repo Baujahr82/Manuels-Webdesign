@@ -81,8 +81,9 @@
           if (successEl) {
             successEl.hidden = false;
             successEl.setAttribute('tabindex', '-1');
-            successEl.focus({ preventScroll: false });
-            successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            successEl.focus({ preventScroll: true });
+            var y = successEl.getBoundingClientRect().top + window.pageYOffset - window.innerHeight / 3;
+            window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
           }
         })
         .catch(function (err) {

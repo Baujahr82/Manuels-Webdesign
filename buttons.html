@@ -31,7 +31,7 @@
     <div class="container">
       <p class="sub-tag reveal">Buttonschmiede</p>
       <h1 class="reveal">Dein Motiv, <span class="accent">sauber gepresst</span>.</h1>
-      <p class="lead reveal">Keine Buttons von der Stange: Ich fertige und prüfe jedes Motiv persönlich, in 25&nbsp;mm und 59&nbsp;mm, ab 20&nbsp;Stück aufwärts. Für Vereine, Feiern, Aktionen oder einfach so.</p>
+      <p class="lead reveal">Keine Buttons von der Stange: Ich fertige und prüfe jedes Motiv persönlich, in 25&nbsp;mm und 59&nbsp;mm, ab 20&nbsp;Stück. Für Vereine, Feiern, Aktionen oder einfach so.</p>
       <div class="hero-cta reveal">
         <a class="btn btn-primary" href="#kontakt">Buttons anfragen</a>
         <a class="btn btn-ghost" href="#groessen">Größen ansehen</a>
@@ -74,19 +74,21 @@
       <div class="preview-grid" id="button-preview">
         <div class="pv-controls">
           <label class="pv-drop" for="pv-file" data-pv-drop>
-            <input id="pv-file" type="file" accept="image/*" hidden />
+            <input id="pv-file" class="sr-only" type="file" accept="image/*" />
             <span class="pv-drop-icon" aria-hidden="true">✦</span>
             <strong>Bild hierher ziehen</strong>
-            <span>oder klicken und auswählen</span>
+            <span>oder klicken und auswählen · auch Strg+V geht</span>
           </label>
           <div class="pv-zoom" data-pv-zoomrow hidden>
             <label for="pv-zoom">Zoom</label>
             <input id="pv-zoom" class="calc-slider" type="range" min="100" max="300" value="100" step="1" aria-label="Motiv zoomen" />
-            <p class="form-fineprint">Tipp: Verschieb dein Motiv im großen Kreis mit Maus oder Finger.</p>
+            <p class="form-fineprint">Tipp: Verschieb dein Motiv im großen Kreis mit Maus, Finger oder Pfeiltasten.</p>
+            <button type="button" class="btn btn-ghost pv-reset" data-pv-reset>Zurücksetzen</button>
           </div>
+          <p class="pv-status" data-pv-status role="status" aria-live="polite"></p>
         </div>
         <div class="pv-stage">
-          <div class="btn-mockup pv-big" data-pv-big aria-label="Große Button-Vorschau">
+          <div class="btn-mockup pv-big" data-pv-big role="img" tabindex="0" aria-label="Große Button-Vorschau — nach dem Laden mit Pfeiltasten verschieben, Plus/Minus zoomt">
             <img alt="" data-pv-img hidden />
             <span class="pv-empty" data-pv-empty>Dein<br />Motiv</span>
           </div>
@@ -140,20 +142,20 @@
       </div>
       <ol class="steps">
         <li class="reveal">
-          <h4>Motiv schicken — oder gemeinsam erarbeiten</h4>
+          <h3 class="step-title">Motiv schicken — oder gemeinsam erarbeiten</h3>
           <p>Hast du schon ein Motiv (Foto, Logo, Grafik)? Schick es mir. Falls nicht, setzen wir uns kurz zusammen und entwickeln eines, das zu deinem Anlass passt.</p>
         </li>
         <li class="reveal">
-          <h4>Menge &amp; Größe wählen</h4>
+          <h3 class="step-title">Menge &amp; Größe wählen</h3>
           <p>25&nbsp;mm oder 59&nbsp;mm? Mindestabnahme 20&nbsp;Stück. Ich gebe dir einen Festpreis und sag dir, was machbar ist.</p>
         </li>
         <li class="reveal">
-          <h4>Ich prüfe dein Motiv</h4>
+          <h3 class="step-title">Ich prüfe dein Motiv</h3>
           <p>Jedes Motiv kontrolliere ich einzeln vor dem Druck, damit nichts verrutscht oder verpixelt. Bei Bedarf gibt's vorab einen Probebutton zur Druckfreigabe.</p>
         </li>
         <li class="reveal">
-          <h4>Abholen oder erhalten</h4>
-          <p>Fertig innerhalb von 1–2&nbsp;Wochen. Abholung in Pforzheim oder Versand per Post. Eilig? Frag nach — wir finden meistens eine Lösung.</p>
+          <h3 class="step-title">Abholen oder erhalten</h3>
+          <p>Fertig innerhalb von 1–2&nbsp;Wochen. Abholung in Pforzheim oder Versand per Post. Eilig? Frag nach — meistens finde ich eine Lösung.</p>
         </li>
       </ol>
     </div>
@@ -189,7 +191,7 @@
             <li>Auf Wunsch: Probebutton zur Druckfreigabe</li>
             <li>Abholung in Pforzheim kostenlos</li>
           </ul>
-          <p class="price-fine">Versand als DHL-Paket: pauschal 8,50&nbsp;€ (Porto, Verpackung &amp; Versicherung). Abholung in Pforzheim weiterhin kostenlos.</p>
+          <p class="price-fine">Versand als DHL-Paket: pauschal 8,50&nbsp;€ (Porto, Verpackung &amp; Versicherung). Abholung in Pforzheim kostenlos. Alle Preise sind Endpreise — als Kleinunternehmer nach §&nbsp;19 UStG weise ich keine Umsatzsteuer aus.</p>
         </div>
         <div class="card price-why">
           <span class="num">Warum ab 20&nbsp;Stück?</span>
@@ -230,8 +232,8 @@
               <span class="calc-sub">DHL-Paket inkl. Porto, Verpackung &amp; Versicherung.</span>
             </span>
             <div class="segmented" data-seg="versand" role="group" aria-label="Abholung oder Versand">
-              <button type="button" data-val="0" class="is-on">Abholung Pforzheim · kostenlos</button>
-              <button type="button" data-val="1">Versand · 8,50&nbsp;€</button>
+              <button type="button" data-val="0" class="is-on" aria-pressed="true">Abholung Pforzheim · kostenlos</button>
+              <button type="button" data-val="1" aria-pressed="false">Versand · 8,50&nbsp;€</button>
             </div>
           </div>
         </div>
@@ -244,15 +246,15 @@
           </div>
           <div class="sum-line" data-line="q59">
             <span class="s-lab">59&nbsp;mm<small data-out="q59-lab"></small></span>
-            <span class="s-val" data-out="q59">12,00 €</span>
+            <span class="s-val" data-out="q59">20,00 €</span>
           </div>
           <div class="sum-line is-off" data-line="versand">
             <span class="s-lab">Versand (DHL-Paket)</span>
             <span class="s-val" data-out="versand">8,50 €</span>
           </div>
-          <div class="calc-total">
+          <div class="calc-total" aria-live="polite">
             <span class="t-lab">Gesamt</span>
-            <span class="t-val" data-out="total">12,00 €</span>
+            <span class="t-val" data-out="total">20,00 €</span>
           </div>
           <p class="calc-note" data-out="min-note" hidden></p>
           <p class="calc-kaution"><strong data-out="stueck-lab">20 Stück</strong> · inkl. Layout-Check, Druck, Schneiden &amp; Pressen.</p>
@@ -348,7 +350,7 @@
             </div>
 
             <button class="btn btn-primary" type="submit">Anfrage senden</button>
-            <p class="form-fineprint">Mit dem Absenden willigst du in die Verarbeitung deiner Angaben ein.</p>
+            <p class="form-fineprint">Deine Angaben nutze ich nur, um deine Anfrage zu beantworten. Mehr dazu in der <a class="inline-link" href="datenschutz.html">Datenschutzerklärung</a>.</p>
             <div class="form-error" hidden>Hoppla, da ist was schiefgegangen. Schreib mir bitte direkt an manuel-dienstleistungen@gmx.de.</div>
           </form>
 
