@@ -55,11 +55,11 @@ assets/             Logos & Favicon
 
 Die beiden Formulare (`contact` und `anfrage`) erkennt Netlify nach dem ersten Deploy automatisch — sie tauchen unter **Forms** im Dashboard auf.
 
-**Damit Nachrichten an `manuel-dienstleistungen@gmx.de` ankommen:**
+**Damit Nachrichten an `mr-dienstleistungen@gmx.com` ankommen:**
 
 1. **Site settings → Forms → contact → Form notifications → Add notification**
 2. **Email notification** auswählen
-3. **Email to notify:** `manuel-dienstleistungen@gmx.de`
+3. **Email to notify:** `mr-dienstleistungen@gmx.com`
 4. **Save**
 5. Das gleiche nochmal für das Formular **`anfrage`** wiederholen.
 
@@ -122,4 +122,4 @@ und ändern, dann neu hochladen (oder pushen, wenn über GitHub).
 
 ## Kontakt zum Entwickler
 
-manuel-dienstleistungen@gmx.de
+mr-dienstleistungen@gmx.com

@@ -19,10 +19,10 @@
 # Forms-Erkennung läuft automatisch über data-netlify="true" im HTML.
 #
 # WICHTIG nach dem ersten Deploy:
-# E-Mail-Benachrichtigungen an manuel-dienstleistungen@gmx.de einrichten:
+# E-Mail-Benachrichtigungen an mr-dienstleistungen@gmx.com einrichten:
 #   Site settings → Forms → "contact" → Form notifications →
 #     Add notification → Email notification →
-#     Email to notify: manuel-dienstleistungen@gmx.de
+#     Email to notify: mr-dienstleistungen@gmx.com
 #
 # Das gleiche nochmal für das Formular "anfrage":
 #   Site settings → Forms → "anfrage" → Form notifications → ...
