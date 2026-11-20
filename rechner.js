@@ -51,7 +51,10 @@
     }
     return BESTELL_STAFFEL[BESTELL_STAFFEL.length - 1].preis;
   }
-  var BESTELL_VERSAND = 8.50; // Pauschale Porto, Verpackung & Versicherung (DHL-Paket)
+  // ----- Versand nach Gewicht (DHL-Paket) ------------------
+  // Wird nicht im Rechner addiert: Der Versandpreis richtet sich nach dem
+  // echten Paketgewicht und wird mit dem Festpreis genannt.
+  // Staffel (DHL online, aufgerundet): bis 2 kg 7 € · bis 5 kg 8 € · bis 10 kg 11 € · bis 20 kg 19 € · bis 31,5 kg 24 €
   var BESTELL_MIN   = 20;           // Mindestmenge gesamt
 
   // ----- Helfer --------------------------------------------
@@ -313,6 +316,7 @@
     var sQ25Lab  = $('[data-out="q25-lab"]', el);
     var sQ59Lab  = $('[data-out="q59-lab"]', el);
     var sVersand = $('[data-out="versand"]', el);
+    var sVersandLab = $('[data-out="versand-lab"]', el);
     var sTotal   = $('[data-out="total"]', el);
     var minNote  = $('[data-out="min-note"]', el);
     var stueckLab = $('[data-out="stueck-lab"]', el);
@@ -322,7 +326,8 @@
       var preis = preisFuerMenge(total);
       var c25 = state.q25 * preis;
       var c59 = state.q59 * preis;
-      var versandKosten = state.versand ? BESTELL_VERSAND : 0;
+      var versandKosten = 0; // Versand nach Gewicht, nicht im Richtpreis
+      if (sVersandLab) sVersandLab.textContent = state.versand ? 'Preis nach Paketgewicht' : '';
 
       q25Line.classList.toggle('is-off', state.q25 === 0);
       q59Line.classList.toggle('is-off', state.q59 === 0);
@@ -331,7 +336,7 @@
       sQ59Lab.textContent = state.q59 > 0 ? state.q59 + ' × ' + euro(preis) : '';
       sQ25.textContent = state.q25 > 0 ? euro(c25) : '—';
       sQ59.textContent = state.q59 > 0 ? euro(c59) : '—';
-      sVersand.textContent = state.versand ? euro(versandKosten) : '—';
+      sVersand.textContent = state.versand ? 'nach Gewicht' : '—';
       sTotal.textContent = euro(c25 + c59 + versandKosten);
       stueckLab.textContent = total + ' Stück · ' + euro(preis) + '/Stück';
 
@@ -355,8 +360,8 @@
         subject: 'Buttons: ' + (teile.join(', ') || 'Menge offen'),
         message: 'Hallo Manuel,\n\nich möchte Buttons anfragen:\n· ' + (teile.join('\n· ') || 'Menge noch offen') +
           '\n· Staffelpreis: ' + euro(preisFuerMenge(state.q25 + state.q59)) + '/Stück' +
-          '\n· ' + (state.versand ? 'Versand als DHL-Paket (8,50 €)' : 'Abholung in Pforzheim (kostenlos)') +
-          '\n· Richtpreis laut Rechner: ' + sTotal.textContent +
+          '\n· ' + (state.versand ? 'Versand als DHL-Paket (nach Gewicht)' : 'Abholung in Pforzheim (kostenlos)') +
+          '\n· Richtpreis laut Rechner: ' + sTotal.textContent + (state.versand ? ' zzgl. Versand' : '') +
           '\n\nMotiv / Anlass: '
       };
     });
