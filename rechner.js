@@ -55,6 +55,7 @@
   // Wird nicht im Rechner addiert: Der Versandpreis richtet sich nach dem
   // echten Paketgewicht und wird mit dem Festpreis genannt.
   // Staffel (DHL online, aufgerundet): bis 2 kg 7 € · bis 5 kg 8 € · bis 10 kg 11 € · bis 20 kg 19 € · bis 31,5 kg 24 €
+  var VERSAND_STAFFEL_TEXT = 'bis 2 kg 7 € · bis 5 kg 8 € · bis 10 kg 11 € · bis 20 kg 19 € · bis 31,5 kg 24 €';
   var BESTELL_MIN   = 20;           // Mindestmenge gesamt
 
   // ----- Helfer --------------------------------------------
@@ -319,6 +320,7 @@
     var sVersandLab = $('[data-out="versand-lab"]', el);
     var sTotal   = $('[data-out="total"]', el);
     var minNote  = $('[data-out="min-note"]', el);
+    var versNote = $('[data-out="versand-note"]', el);
     var stueckLab = $('[data-out="stueck-lab"]', el);
 
     function render() {
@@ -328,6 +330,10 @@
       var c59 = state.q59 * preis;
       var versandKosten = 0; // Versand nach Gewicht, nicht im Richtpreis
       if (sVersandLab) sVersandLab.textContent = state.versand ? 'Preis nach Paketgewicht' : '';
+      if (versNote) {
+        versNote.hidden = !state.versand;
+        versNote.textContent = 'Versand zzgl. nach Gewicht (DHL-Paket): ' + VERSAND_STAFFEL_TEXT + '.';
+      }
 
       q25Line.classList.toggle('is-off', state.q25 === 0);
       q59Line.classList.toggle('is-off', state.q59 === 0);
