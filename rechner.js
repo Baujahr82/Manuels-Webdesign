@@ -33,23 +33,28 @@
   var ZELT_WAND    = 4;    // pro Seitenwand, einmalig für die ganze Miete (unter gewerblichem Niveau)
   var ZELT_KAUTION = 150;
 
-  // Buttons-Bestellung (Buttonschmiede): Staffelpreis nach Gesamtmenge.
-  // Staffel: an den Bruchpunkten der recherchierten Konkurrenz orientiert,
-  // pro Stufe minimal günstiger als der jeweils günstigste Vergleichspreis,
-  // nie unter 0,50 € pro Stück (Floor erst ab 500 Stück erreicht).
+  // Buttons-Bestellung: eigene Staffel je Größe.
+  // Die Stufe richtet sich nach der GESAMTMENGE (25 mm + 59 mm zusammen),
+  // der Stückpreis nach der jeweiligen Größe.
+  // Kalkulation nach Einkaufspreis (Badgematic, Nov. 2026, je 1.000 Stück):
+  //   25 mm: 112 € -> 0,112 €  ·  59 mm: 184 € -> 0,184 €
+  //   + Versand Badgematic ~0,008 €/Stück + Druck 0,06 €/Stück
+  //   => Selbstkosten ca. 0,18 € (25 mm) bzw. 0,25 € (59 mm)
+  // Verkaufspreis = Selbstkosten × Faktor, aufgerundet auf den Cent:
+  //   20–29: ×4,0 · 30–49: ×3,4 · 50–99: ×2,7 · 100–199: ×2,3 · 200–499: ×2,2 · ab 500: ×2,0
   var BESTELL_STAFFEL = [
-    { bis: 29,        preis: 1.00 },
-    { bis: 49,        preis: 0.85 },
-    { bis: 99,        preis: 0.68 },
-    { bis: 199,       preis: 0.60 },
-    { bis: 499,       preis: 0.55 },
-    { bis: Infinity,  preis: 0.50 }
+    { bis: 29,        p25: 0.72, p59: 1.00 },
+    { bis: 49,        p25: 0.61, p59: 0.85 },
+    { bis: 99,        p25: 0.49, p59: 0.68 },
+    { bis: 199,       p25: 0.42, p59: 0.58 },
+    { bis: 499,       p25: 0.40, p59: 0.55 },
+    { bis: Infinity,  p25: 0.36, p59: 0.50 }
   ];
-  function preisFuerMenge(menge) {
+  function stufeFuerMenge(menge) {
     for (var i = 0; i < BESTELL_STAFFEL.length; i++) {
-      if (menge <= BESTELL_STAFFEL[i].bis) return BESTELL_STAFFEL[i].preis;
+      if (menge <= BESTELL_STAFFEL[i].bis) return BESTELL_STAFFEL[i];
     }
-    return BESTELL_STAFFEL[BESTELL_STAFFEL.length - 1].preis;
+    return BESTELL_STAFFEL[BESTELL_STAFFEL.length - 1];
   }
   // ----- Versand nach Gewicht (DHL-Paket) ------------------
   // Wird nicht im Rechner addiert: Der Versandpreis richtet sich nach dem
@@ -325,9 +330,9 @@
 
     function render() {
       var total = state.q25 + state.q59;
-      var preis = preisFuerMenge(total);
-      var c25 = state.q25 * preis;
-      var c59 = state.q59 * preis;
+      var stufe = stufeFuerMenge(total);
+      var c25 = state.q25 * stufe.p25;
+      var c59 = state.q59 * stufe.p59;
       var versandKosten = 0; // Versand nach Gewicht, nicht im Richtpreis
       if (sVersandLab) sVersandLab.textContent = state.versand ? 'Preis nach Paketgewicht' : '';
       if (versNote) {
@@ -338,13 +343,13 @@
       q25Line.classList.toggle('is-off', state.q25 === 0);
       q59Line.classList.toggle('is-off', state.q59 === 0);
       versLine.classList.toggle('is-off', !state.versand);
-      sQ25Lab.textContent = state.q25 > 0 ? state.q25 + ' × ' + euro(preis) : '';
-      sQ59Lab.textContent = state.q59 > 0 ? state.q59 + ' × ' + euro(preis) : '';
+      sQ25Lab.textContent = state.q25 > 0 ? state.q25 + ' × ' + euro(stufe.p25) : '';
+      sQ59Lab.textContent = state.q59 > 0 ? state.q59 + ' × ' + euro(stufe.p59) : '';
       sQ25.textContent = state.q25 > 0 ? euro(c25) : '—';
       sQ59.textContent = state.q59 > 0 ? euro(c59) : '—';
       sVersand.textContent = state.versand ? 'nach Gewicht' : '—';
       sTotal.textContent = euro(c25 + c59 + versandKosten);
-      stueckLab.textContent = total + ' Stück · ' + euro(preis) + '/Stück';
+      stueckLab.textContent = total + ' Stück gesamt';
 
       if (total > 0 && total < BESTELL_MIN) {
         minNote.hidden = false;
@@ -359,13 +364,19 @@
     wireStepper($('[data-step="q59"]', el), function (v) { state.q59 = v; render(); });
     wireSegmented($('[data-seg="versand"]', el), function (v) { state.versand = v; render(); });
     wireSend(el, function () {
+      function preisText(q25, q59) {
+        var s = stufeFuerMenge(q25 + q59), t = [];
+        if (q25 > 0) t.push('25 mm ' + euro(s.p25) + '/Stück');
+        if (q59 > 0) t.push('59 mm ' + euro(s.p59) + '/Stück');
+        return t.join(', ') || '—';
+      }
       var teile = [];
       if (state.q25 > 0) teile.push(state.q25 + '× 25 mm');
       if (state.q59 > 0) teile.push(state.q59 + '× 59 mm');
       return {
         subject: 'Buttons: ' + (teile.join(', ') || 'Menge offen'),
         message: 'Hallo Manuel,\n\nich möchte Buttons anfragen:\n· ' + (teile.join('\n· ') || 'Menge noch offen') +
-          '\n· Staffelpreis: ' + euro(preisFuerMenge(state.q25 + state.q59)) + '/Stück' +
+          '\n· Staffelpreis: ' + preisText(state.q25, state.q59) +
           '\n· ' + (state.versand ? 'Versand als DHL-Paket (nach Gewicht)' : 'Abholung in Pforzheim (kostenlos)') +
           '\n· Richtpreis laut Rechner: ' + sTotal.textContent + (state.versand ? ' zzgl. Versand' : '') +
           '\n\nMotiv / Anlass: '

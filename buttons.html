@@ -8,6 +8,12 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <!-- Schriften werden lokal geladen (siehe styles.css) — keine Google-Server -->
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .price-table th { font-size: 13px; font-weight: 600; color: var(--ink); text-align: right; padding: 0 0 6px; border-bottom: 1px solid var(--line); }
+    .price-table th:first-child { text-align: left; }
+    .price-table td + td { padding-left: 12px; }
+    .price-table td:nth-child(2) { text-align: right; font-weight: 600; color: var(--mint-dark); }
+  </style>
 </head>
 <body>
 
@@ -167,23 +173,26 @@
       <div class="section-head">
         <p class="eyebrow">Preise</p>
         <h2>Je mehr Stück, desto günstiger.</h2>
-        <p class="lead">Egal ob 25&nbsp;mm oder 59&nbsp;mm — selbe Staffel. Der Preis pro Stück sinkt automatisch mit der Menge.</p>
+        <p class="lead">Zwei Größen, zwei Preise. Die Staffel richtet sich nach deiner Gesamtmenge — wer beide Größen mischt, rutscht schneller in die günstigere Stufe.</p>
       </div>
 
       <div class="split" style="margin-bottom:24px;">
         <div class="card feature price-card">
           <span class="num">Staffelpreise</span>
           <table class="price-table">
+            <thead>
+              <tr><th scope="col">Gesamtmenge</th><th scope="col">25&nbsp;mm</th><th scope="col">59&nbsp;mm</th></tr>
+            </thead>
             <tbody>
-              <tr><td>20&nbsp;–&nbsp;29&nbsp;Stück</td><td>1,00&nbsp;€ / Stück</td></tr>
-              <tr><td>30&nbsp;–&nbsp;49&nbsp;Stück</td><td>0,85&nbsp;€ / Stück</td></tr>
-              <tr><td>50&nbsp;–&nbsp;99&nbsp;Stück</td><td>0,68&nbsp;€ / Stück</td></tr>
-              <tr><td>100&nbsp;–&nbsp;199&nbsp;Stück</td><td>0,60&nbsp;€ / Stück</td></tr>
-              <tr><td>200&nbsp;–&nbsp;499&nbsp;Stück</td><td>0,55&nbsp;€ / Stück</td></tr>
-              <tr><td>ab 500&nbsp;Stück</td><td>0,50&nbsp;€ / Stück</td></tr>
+              <tr><td>20&nbsp;–&nbsp;29&nbsp;Stück</td><td>0,72&nbsp;€</td><td>1,00&nbsp;€</td></tr>
+              <tr><td>30&nbsp;–&nbsp;49&nbsp;Stück</td><td>0,61&nbsp;€</td><td>0,85&nbsp;€</td></tr>
+              <tr><td>50&nbsp;–&nbsp;99&nbsp;Stück</td><td>0,49&nbsp;€</td><td>0,68&nbsp;€</td></tr>
+              <tr><td>100&nbsp;–&nbsp;199&nbsp;Stück</td><td>0,42&nbsp;€</td><td>0,58&nbsp;€</td></tr>
+              <tr><td>200&nbsp;–&nbsp;499&nbsp;Stück</td><td>0,40&nbsp;€</td><td>0,55&nbsp;€</td></tr>
+              <tr><td>ab 500&nbsp;Stück</td><td>0,36&nbsp;€</td><td>0,50&nbsp;€</td></tr>
             </tbody>
           </table>
-          <p class="price-sub">Gilt für beide Größen — auch gemischt bestellbar.</p>
+          <p class="price-sub">Preise pro Stück. Gemischt bestellbar — die Stufe zählt beide Größen zusammen.</p>
           <ul class="price-includes">
             <li>Individueller Layout-Check deines Motivs — kein Fehlerdruck</li>
             <li>Druck &amp; Ausschneiden</li>
@@ -197,7 +206,7 @@
           <span class="num">Warum ab 20&nbsp;Stück?</span>
           <p style="color:var(--ink);">Jeder Button läuft durch dieselben Schritte: Motiv prüfen, drucken, ausschneiden, pressen. Ab zwanzig Stück läuft das effizient und der Preis bleibt fair. Trotzdem bleibt es Handarbeit — keine automatisierte Massenware.</p>
           <p style="color:var(--ink);">Du brauchst weniger? Schreib mir trotzdem — dann sprechen wir konkret über den Preis, das lässt sich meistens regeln.</p>
-          <p class="price-fine" style="margin-top:auto;">Richtwert (ohne Versand): 20 Stück = 20,00 € · 50 Stück = 34,00 € · 100 Stück = 60,00 € · 500 Stück = 250,00 €</p>
+          <p class="price-fine" style="margin-top:auto;">Richtwert (ohne Versand) — 59&nbsp;mm: 20 Stück = 20,00&nbsp;€ · 50 = 34,00&nbsp;€ · 100 = 58,00&nbsp;€ · 500 = 250,00&nbsp;€. 25&nbsp;mm: 20 Stück = 14,40&nbsp;€ · 50 = 24,50&nbsp;€ · 100 = 42,00&nbsp;€ · 500 = 180,00&nbsp;€</p>
         </div>
       </div>
 
@@ -258,11 +267,11 @@
           </div>
           <p class="calc-note" data-out="min-note" hidden></p>
           <p class="calc-note" data-out="versand-note" hidden></p>
-          <p class="calc-kaution"><strong data-out="stueck-lab">20 Stück</strong> · inkl. Layout-Check, Druck, Schneiden &amp; Pressen.</p>
+          <p class="calc-kaution"><strong data-out="stueck-lab">20 Stück gesamt</strong> · inkl. Layout-Check, Druck, Schneiden &amp; Pressen.</p>
           <button class="btn btn-primary" type="button" data-calc-send>Diese Kalkulation anfragen</button>
         </div>
       </div>
-      <p class="form-fineprint" style="margin-top:18px;">Richtpreis — den verbindlichen Festpreis bekommst du auf Anfrage. Brauchst du weniger als 20&nbsp;Stück oder beide Größen gemischt? Schreib mir einfach.</p>
+      <p class="form-fineprint" style="margin-top:18px;">Richtpreis — den verbindlichen Festpreis bekommst du auf Anfrage. Brauchst du weniger als 20&nbsp;Stück? Schreib mir einfach.</p>
     </div>
   </section>
 
