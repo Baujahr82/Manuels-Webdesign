@@ -34,8 +34,8 @@
   var ZELT_KAUTION = 150;
 
   // Buttons-Bestellung: eigene Staffel je Größe.
-  // Die Stufe richtet sich nach der GESAMTMENGE (25 mm + 59 mm zusammen),
-  // der Stückpreis nach der jeweiligen Größe.
+  // Die Stufe richtet sich nach der Menge JE GRÖSSE (25 mm und 59 mm werden
+  // getrennt gezählt). Mindestmenge 20 Stück je bestellter Größe.
   // Kalkulation nach Einkaufspreis (Badgematic, Nov. 2026, je 1.000 Stück):
   //   25 mm: 112 € -> 0,112 €  ·  59 mm: 184 € -> 0,184 €
   //   + Versand Badgematic ~0,008 €/Stück + Druck 0,06 €/Stück
@@ -61,7 +61,7 @@
   // echten Paketgewicht und wird mit dem Festpreis genannt.
   // Staffel (DHL online, aufgerundet): bis 2 kg 7 € · bis 5 kg 8 € · bis 10 kg 11 € · bis 20 kg 19 € · bis 31,5 kg 24 €
   var VERSAND_STAFFEL_TEXT = 'bis 2 kg 7 € · bis 5 kg 8 € · bis 10 kg 11 € · bis 20 kg 19 € · bis 31,5 kg 24 €';
-  var BESTELL_MIN   = 20;           // Mindestmenge gesamt
+  var BESTELL_MIN   = 20;           // Mindestmenge je Größe
 
   // ----- Helfer --------------------------------------------
   function euro(n) {
@@ -330,9 +330,10 @@
 
     function render() {
       var total = state.q25 + state.q59;
-      var stufe = stufeFuerMenge(total);
-      var c25 = state.q25 * stufe.p25;
-      var c59 = state.q59 * stufe.p59;
+      var p25 = stufeFuerMenge(state.q25).p25;
+      var p59 = stufeFuerMenge(state.q59).p59;
+      var c25 = state.q25 * p25;
+      var c59 = state.q59 * p59;
       var versandKosten = 0; // Versand nach Gewicht, nicht im Richtpreis
       if (sVersandLab) sVersandLab.textContent = state.versand ? 'Preis nach Paketgewicht' : '';
       if (versNote) {
@@ -343,18 +344,24 @@
       q25Line.classList.toggle('is-off', state.q25 === 0);
       q59Line.classList.toggle('is-off', state.q59 === 0);
       versLine.classList.toggle('is-off', !state.versand);
-      sQ25Lab.textContent = state.q25 > 0 ? state.q25 + ' × ' + euro(stufe.p25) : '';
-      sQ59Lab.textContent = state.q59 > 0 ? state.q59 + ' × ' + euro(stufe.p59) : '';
+      sQ25Lab.textContent = state.q25 > 0 ? state.q25 + ' × ' + euro(p25) : '';
+      sQ59Lab.textContent = state.q59 > 0 ? state.q59 + ' × ' + euro(p59) : '';
       sQ25.textContent = state.q25 > 0 ? euro(c25) : '—';
       sQ59.textContent = state.q59 > 0 ? euro(c59) : '—';
       sVersand.textContent = state.versand ? 'nach Gewicht' : '—';
       sTotal.textContent = euro(c25 + c59 + versandKosten);
       stueckLab.textContent = total + ' Stück gesamt';
 
-      if (total > 0 && total < BESTELL_MIN) {
+      var fehlt = [];
+      if (state.q25 > 0 && state.q25 < BESTELL_MIN) fehlt.push('25 mm: noch ' + (BESTELL_MIN - state.q25));
+      if (state.q59 > 0 && state.q59 < BESTELL_MIN) fehlt.push('59 mm: noch ' + (BESTELL_MIN - state.q59));
+      if (fehlt.length) {
         minNote.hidden = false;
-        minNote.textContent = 'Mindestmenge ' + BESTELL_MIN + ' Stück — es fehlen noch ' +
-          (BESTELL_MIN - total) + '. Du brauchst weniger? Frag trotzdem an.';
+        minNote.textContent = 'Mindestmenge ' + BESTELL_MIN + ' Stück je Größe — ' + fehlt.join(', ') +
+          '. Du brauchst weniger? Frag trotzdem an.';
+      } else if (total === 0) {
+        minNote.hidden = false;
+        minNote.textContent = 'Wähle mindestens eine Größe (ab ' + BESTELL_MIN + ' Stück).';
       } else {
         minNote.hidden = true;
       }
@@ -365,9 +372,9 @@
     wireSegmented($('[data-seg="versand"]', el), function (v) { state.versand = v; render(); });
     wireSend(el, function () {
       function preisText(q25, q59) {
-        var s = stufeFuerMenge(q25 + q59), t = [];
-        if (q25 > 0) t.push('25 mm ' + euro(s.p25) + '/Stück');
-        if (q59 > 0) t.push('59 mm ' + euro(s.p59) + '/Stück');
+        var t = [];
+        if (q25 > 0) t.push('25 mm ' + euro(stufeFuerMenge(q25).p25) + '/Stück');
+        if (q59 > 0) t.push('59 mm ' + euro(stufeFuerMenge(q59).p59) + '/Stück');
         return t.join(', ') || '—';
       }
       var teile = [];
