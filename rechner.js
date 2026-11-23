@@ -56,6 +56,26 @@
     }
     return BESTELL_STAFFEL[BESTELL_STAFFEL.length - 1];
   }
+  // Preisdeckel: Eine Menge kostet nie mehr als eine größere Stufe insgesamt.
+  // Beispiel 59 mm: 490 × 0,55 € = 269,50 € > 500 × 0,50 € = 250,00 €
+  //   -> Preis 250,00 € und Vorschlag „Auf 500 erhöhen“.
+  function cent(x) { return Math.round(x * 100) / 100; }
+  function bestpreis(menge, key) {
+    var normal = cent(menge * stufeFuerMenge(menge)[key]);
+    var res = { preis: normal, normal: normal, vorschlag: null, vorschlagPreis: null };
+    if (menge <= 0) return res;
+    for (var i = 0; i < BESTELL_STAFFEL.length; i++) {
+      var ab = i === 0 ? BESTELL_MIN : BESTELL_STAFFEL[i - 1].bis + 1;
+      if (ab <= menge) continue;
+      var kosten = cent(ab * BESTELL_STAFFEL[i][key]);
+      if (kosten <= normal && (res.vorschlag === null || kosten <= res.vorschlagPreis)) {
+        res.vorschlag = ab;
+        res.vorschlagPreis = kosten;
+      }
+    }
+    if (res.vorschlag !== null) res.preis = Math.min(normal, res.vorschlagPreis);
+    return res;
+  }
   // ----- Versand nach Gewicht (DHL-Paket) ------------------
   // Wird nicht im Rechner addiert: Der Versandpreis richtet sich nach dem
   // echten Paketgewicht und wird mit dem Festpreis genannt.
@@ -78,16 +98,20 @@
     var max = parseInt(input.getAttribute('max'), 10);
     var step = parseInt(input.getAttribute('step'), 10) || 1;
     var btns = $all('button', root);
+    // data-gap="20": Werte zwischen min und gap sind nicht erlaubt
+    // (z. B. 0 oder ab 20). Minus springt auf min, Plus/Eingabe auf gap.
+    var gap = parseInt(root.getAttribute('data-gap'), 10) || 0;
 
-    function set(v, typing) {
+    function set(v, typing, dir) {
       v = clamp(isNaN(v) ? min : v, min, max);
+      if (gap && v > min && v < gap) v = dir < 0 ? min : gap;
       if (!typing) input.value = v;
       btns[0].disabled = v <= min;
       btns[1].disabled = v >= max;
       onChange(v);
     }
-    btns[0].addEventListener('click', function () { set(parseInt(input.value, 10) - step); });
-    btns[1].addEventListener('click', function () { set(parseInt(input.value, 10) + step); });
+    btns[0].addEventListener('click', function () { set(parseInt(input.value, 10) - step, false, -1); });
+    btns[1].addEventListener('click', function () { set(parseInt(input.value, 10) + step, false, 1); });
     input.addEventListener('input', function () { set(parseInt(input.value, 10), true); });
     input.addEventListener('change', function () { set(parseInt(input.value, 10)); });
     set(parseInt(input.value, 10));
@@ -326,14 +350,45 @@
     var sTotal   = $('[data-out="total"]', el);
     var minNote  = $('[data-out="min-note"]', el);
     var versNote = $('[data-out="versand-note"]', el);
+    var tippNote = $('[data-out="tipp-note"]', el);
+    var st25 = null, st59 = null;
+
+    function lab(menge, p, b) {
+      if (b.preis < b.normal) return menge + ' Stück · Bestpreis (statt ' + euro(b.normal) + ')';
+      return menge + ' × ' + euro(p);
+    }
+    function renderTipps(liste) {
+      if (!tippNote) return;
+      tippNote.textContent = '';
+      var any = false;
+      liste.forEach(function (x) {
+        var name = x[0], b = x[1], st = x[2];
+        if (b.vorschlag === null) return;
+        any = true;
+        var zeile = document.createElement('span');
+        zeile.style.display = 'block';
+        zeile.textContent = 'Tipp ' + name + ': Für ' + euro(b.vorschlagPreis) + ' bekommst du schon ' +
+          b.vorschlag + ' Stück. ';
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'calc-tip-btn';
+        btn.textContent = 'Auf ' + b.vorschlag + ' erhöhen';
+        btn.addEventListener('click', function () { if (st) st.set(b.vorschlag); });
+        zeile.appendChild(btn);
+        tippNote.appendChild(zeile);
+      });
+      tippNote.hidden = !any;
+    }
     var stueckLab = $('[data-out="stueck-lab"]', el);
 
     function render() {
       var total = state.q25 + state.q59;
       var p25 = stufeFuerMenge(state.q25).p25;
       var p59 = stufeFuerMenge(state.q59).p59;
-      var c25 = state.q25 * p25;
-      var c59 = state.q59 * p59;
+      var b25 = bestpreis(state.q25, 'p25');
+      var b59 = bestpreis(state.q59, 'p59');
+      var c25 = b25.preis;
+      var c59 = b59.preis;
       var versandKosten = 0; // Versand nach Gewicht, nicht im Richtpreis
       if (sVersandLab) sVersandLab.textContent = state.versand ? 'Preis nach Paketgewicht' : '';
       if (versNote) {
@@ -344,8 +399,9 @@
       q25Line.classList.toggle('is-off', state.q25 === 0);
       q59Line.classList.toggle('is-off', state.q59 === 0);
       versLine.classList.toggle('is-off', !state.versand);
-      sQ25Lab.textContent = state.q25 > 0 ? state.q25 + ' × ' + euro(p25) : '';
-      sQ59Lab.textContent = state.q59 > 0 ? state.q59 + ' × ' + euro(p59) : '';
+      sQ25Lab.textContent = state.q25 > 0 ? lab(state.q25, p25, b25) : '';
+      sQ59Lab.textContent = state.q59 > 0 ? lab(state.q59, p59, b59) : '';
+      renderTipps([['25 mm', b25, st25], ['59 mm', b59, st59]]);
       sQ25.textContent = state.q25 > 0 ? euro(c25) : '—';
       sQ59.textContent = state.q59 > 0 ? euro(c59) : '—';
       sVersand.textContent = state.versand ? 'nach Gewicht' : '—';
@@ -367,14 +423,20 @@
       }
     }
 
-    wireStepper($('[data-step="q25"]', el), function (v) { state.q25 = v; render(); });
-    wireStepper($('[data-step="q59"]', el), function (v) { state.q59 = v; render(); });
+    st25 = wireStepper($('[data-step="q25"]', el), function (v) { state.q25 = v; render(); });
+    st59 = wireStepper($('[data-step="q59"]', el), function (v) { state.q59 = v; render(); });
+    render();
     wireSegmented($('[data-seg="versand"]', el), function (v) { state.versand = v; render(); });
     wireSend(el, function () {
       function preisText(q25, q59) {
         var t = [];
-        if (q25 > 0) t.push('25 mm ' + euro(stufeFuerMenge(q25).p25) + '/Stück');
-        if (q59 > 0) t.push('59 mm ' + euro(stufeFuerMenge(q59).p59) + '/Stück');
+        function eins(name, q, key) {
+          var b = bestpreis(q, key);
+          if (b.preis < b.normal) return name + ' Bestpreis ' + euro(b.preis) + ' (Preis von ' + b.vorschlag + ' Stück)';
+          return name + ' ' + euro(stufeFuerMenge(q)[key]) + '/Stück';
+        }
+        if (q25 > 0) t.push(eins('25 mm', q25, 'p25'));
+        if (q59 > 0) t.push(eins('59 mm', q59, 'p59'));
         return t.join(', ') || '—';
       }
       var teile = [];

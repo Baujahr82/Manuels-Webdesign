@@ -13,6 +13,8 @@
     .price-table th:first-child { text-align: left; }
     .price-table td + td { padding-left: 12px; }
     .price-table td:nth-child(2) { text-align: right; font-weight: 600; color: var(--mint-dark); }
+    .calc-tip-btn { margin-left: 4px; padding: 2px 10px; border: 1px solid var(--mint-dark); border-radius: 999px; background: transparent; color: var(--mint-dark); font: inherit; font-weight: 600; cursor: pointer; }
+    .calc-tip-btn:hover, .calc-tip-btn:focus-visible { background: var(--mint-dark); color: #fff; }
   </style>
 </head>
 <body>
@@ -218,7 +220,7 @@
             <span class="calc-label">25&nbsp;mm Buttons
               <span class="calc-sub">Der Kleine. Ab 20 Stück, in 10er-Schritten.</span>
             </span>
-            <div class="stepper" data-step="q25">
+            <div class="stepper" data-step="q25" data-gap="20">
               <button type="button" aria-label="weniger 25-mm-Buttons">−</button>
               <input type="number" value="0" min="0" max="3000" step="10" inputmode="numeric" aria-label="Anzahl 25-mm-Buttons" />
               <button type="button" aria-label="mehr 25-mm-Buttons">+</button>
@@ -229,7 +231,7 @@
             <span class="calc-label">59&nbsp;mm Buttons
               <span class="calc-sub">Der Große. Ab 20 Stück, in 10er-Schritten.</span>
             </span>
-            <div class="stepper" data-step="q59">
+            <div class="stepper" data-step="q59" data-gap="20">
               <button type="button" aria-label="weniger 59-mm-Buttons">−</button>
               <input type="number" value="20" min="0" max="3000" step="10" inputmode="numeric" aria-label="Anzahl 59-mm-Buttons" />
               <button type="button" aria-label="mehr 59-mm-Buttons">+</button>
@@ -267,6 +269,7 @@
           </div>
           <p class="calc-note" data-out="min-note" hidden></p>
           <p class="calc-note" data-out="versand-note" hidden></p>
+          <p class="calc-note" data-out="tipp-note" aria-live="polite" hidden></p>
           <p class="calc-kaution"><strong data-out="stueck-lab">20 Stück gesamt</strong> · inkl. Layout-Check, Druck, Schneiden &amp; Pressen.</p>
           <button class="btn btn-primary" type="button" data-calc-send>Diese Kalkulation anfragen</button>
         </div>
